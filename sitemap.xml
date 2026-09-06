@@ -8,4 +8,6 @@
   <url><loc>https://abx-intelligence.com/contact.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://abx-intelligence.com/privacy.html</loc><changefreq>monthly</changefreq><priority>0.3</priority></url>
   <url><loc>https://abx-intelligence.com/terms.html</loc><changefreq>monthly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://abx-intelligence.com/cookies.html</loc><changefreq>monthly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://abx-intelligence.com/refunds.html</loc><changefreq>monthly</changefreq><priority>0.3</priority></url>
 </urlset>

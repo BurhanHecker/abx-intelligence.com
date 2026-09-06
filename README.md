@@ -12,10 +12,14 @@ about.html        Founders, origin, principles, vision
 approach.html     Four-stage process, partnership, FAQ
 contact.html      Contact form  ← needs one setup step, see below
 privacy.html      Privacy Policy
-terms.html        Terms of Service
+terms.html        Terms & Conditions
+cookies.html      Cookie Policy
+refunds.html      Payment & Refund Policy
 assets/css/style.css
+assets/css/fonts.css
 assets/js/main.js
 assets/img/favicon.svg
+assets/fonts/          Self-hosted woff2 + OFL.txt license
 robots.txt  sitemap.xml  .htaccess
 ```
 
@@ -71,7 +75,8 @@ it never fails silently.
 |---|---|
 | `contact.html`, `privacy.html`, `terms.html` | `hello@abx-intelligence.com` :  swap for your real address |
 | `robots.txt`, `sitemap.xml` | `https://abx-intelligence.com` :  swap for your real domain |
-| `privacy.html`, `terms.html` | Generic templates. Have them reviewed before relying on them. |
+| all four legal pages | Blocks marked `pending-note` need your real business details |
+| `COMPLIANCE.md` | Read this before launch. Lists what is outstanding and why |
 
 ## Editing content
 

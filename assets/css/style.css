@@ -250,7 +250,8 @@ h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;letter-spacing:-.03e
   display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);
   gap:clamp(32px,5vw,64px);align-items:center;
 }
-.hero-copy{max-width:660px;}
+.hero-copy{max-width:700px;}
+.hero h1{text-wrap:balance;}
 .hero h1{margin-bottom:26px;}
 .hero .lead{max-width:560px;}
 .hero .btn-row{margin-top:36px;}
@@ -674,3 +675,11 @@ h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;letter-spacing:-.03e
 .form-status.is-on{display:block;}
 .form-status.is-error{border-color:rgba(255,122,102,.45);background:rgba(255,122,102,.09);color:#FFB3A6;}
 .form-status.is-ok{border-color:rgba(255,59,33,.4);background:rgba(255,59,33,.09);color:var(--light);}
+
+/* Placeholder marker: any text still awaiting real business detail.
+   Remove this rule once every .pending-note has been replaced. */
+.pending-note{
+  border:1px dashed rgba(255,59,33,.5);background:rgba(255,59,33,.07);
+  padding:12px 14px;border-radius:var(--r-sm);color:#FFB3A6;
+  font-family:var(--font-display);font-size:.86rem;
+}
