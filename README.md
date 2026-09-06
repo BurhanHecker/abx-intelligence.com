@@ -1,4 +1,4 @@
-# ABX Intelligence — Website
+# ABX Intelligence :  Website
 
 Static multi-page marketing site. No build step, no dependencies, no WordPress.
 
@@ -19,7 +19,7 @@ assets/img/favicon.svg
 robots.txt  sitemap.xml  .htaccess
 ```
 
-`.claude/` is local tooling — do not upload it.
+`.claude/` is local tooling :  do not upload it.
 
 ---
 
@@ -34,11 +34,11 @@ plain static site, so it goes straight into the web root instead.
 3. If WordPress is currently installed there and you are replacing it, back it up first
    (Files → Backups), then remove the old WordPress files from `public_html`.
    If you want to keep WordPress running elsewhere, move it into a subfolder instead.
-4. Upload **the contents** of this folder into `public_html` — so that `index.html` sits
+4. Upload **the contents** of this folder into `public_html` :  so that `index.html` sits
    directly in `public_html`, not inside a subfolder.
    Easiest route: zip this folder locally, upload the zip, then use File Manager's
    **Extract** option.
-5. Confirm `.htaccess` uploaded. File Manager hides dotfiles by default —
+5. Confirm `.htaccess` uploaded. File Manager hides dotfiles by default : 
    enable **Settings → Show hidden files** to check.
 6. Visit your domain. That's it.
 
@@ -62,21 +62,21 @@ email on its own, so it posts to [Web3Forms](https://web3forms.com) (free tier, 
 
 4. Replace `YOUR_WEB3FORMS_ACCESS_KEY` with your key and re-upload the file
 
-Until you do, submitting the form shows a message telling the visitor to email instead —
+Until you do, submitting the form shows a message telling the visitor to email instead : 
 it never fails silently.
 
 ## Other placeholders to replace
 
 | Where | What |
 |---|---|
-| `contact.html`, `privacy.html`, `terms.html` | `hello@abx-intelligence.com` — swap for your real address |
-| `robots.txt`, `sitemap.xml` | `https://abx-intelligence.com` — swap for your real domain |
+| `contact.html`, `privacy.html`, `terms.html` | `hello@abx-intelligence.com` :  swap for your real address |
+| `robots.txt`, `sitemap.xml` | `https://abx-intelligence.com` :  swap for your real domain |
 | `privacy.html`, `terms.html` | Generic templates. Have them reviewed before relying on them. |
 
 ## Editing content
 
 Copy lives directly in the HTML. Colours, spacing, and type scale are all CSS variables
-at the top of `assets/css/style.css` — change them in one place and the whole site follows.
+at the top of `assets/css/style.css` :  change them in one place and the whole site follows.
 
 ## Local preview
 

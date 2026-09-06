@@ -1,5 +1,5 @@
 /* ==========================================================================
-   ABX Intelligence — interaction layer
+   ABX Intelligence: interaction layer
    ========================================================================== */
 (function () {
   'use strict';
@@ -58,22 +58,6 @@
   }
 
   /* ------------------------------------------------------------------
-     Cursor spotlight
-     ------------------------------------------------------------------ */
-  var spot = $('.spotlight');
-  if (spot && fine && !reduced) {
-    var sx = window.innerWidth / 2, sy = window.innerHeight / 3, tx = sx, ty = sy;
-    document.body.classList.add('has-pointer');
-    window.addEventListener('pointermove', function (e) { tx = e.clientX; ty = e.clientY; }, { passive: true });
-    (function loop() {
-      sx += (tx - sx) * 0.09;
-      sy += (ty - sy) * 0.09;
-      spot.style.transform = 'translate3d(' + sx.toFixed(1) + 'px,' + sy.toFixed(1) + 'px,0)';
-      requestAnimationFrame(loop);
-    })();
-  }
-
-  /* ------------------------------------------------------------------
      Scroll reveal
      ------------------------------------------------------------------ */
   var revealables = $$('[data-reveal]');
@@ -101,85 +85,11 @@
   });
 
   /* ------------------------------------------------------------------
-     Card spotlight follow
-     ------------------------------------------------------------------ */
-  if (fine && !reduced) {
-    $$('.card').forEach(function (card) {
-      card.addEventListener('pointermove', function (e) {
-        var r = card.getBoundingClientRect();
-        card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
-        card.style.setProperty('--my', (e.clientY - r.top) + 'px');
-      }, { passive: true });
-    });
-  }
-
-  /* ------------------------------------------------------------------
-     Magnetic buttons
-     ------------------------------------------------------------------ */
-  if (fine && !reduced) {
-    $$('[data-magnetic]').forEach(function (el) {
-      el.addEventListener('pointermove', function (e) {
-        var r = el.getBoundingClientRect();
-        var dx = (e.clientX - (r.left + r.width / 2)) * 0.22;
-        var dy = (e.clientY - (r.top + r.height / 2)) * 0.3;
-        el.style.transform = 'translate(' + dx.toFixed(2) + 'px,' + dy.toFixed(2) + 'px)';
-      });
-      el.addEventListener('pointerleave', function () { el.style.transform = ''; });
-    });
-  }
-
-  /* ------------------------------------------------------------------
-     3D tilt on product mockups
-     ------------------------------------------------------------------ */
-  if (fine && !reduced) {
-    $$('.mock--tilt').forEach(function (el) {
-      var parent = el.parentElement;
-      parent.addEventListener('pointermove', function (e) {
-        var r = parent.getBoundingClientRect();
-        var px = (e.clientX - r.left) / r.width - 0.5;
-        var py = (e.clientY - r.top) / r.height - 0.5;
-        el.style.transform =
-          'perspective(1400px) rotateY(' + (px * 7).toFixed(2) + 'deg) rotateX(' +
-          (-py * 6).toFixed(2) + 'deg) translateZ(12px)';
-      });
-      parent.addEventListener('pointerleave', function () { el.style.transform = ''; });
-    });
-  }
-
-  /* ------------------------------------------------------------------
      Animated counters
      ------------------------------------------------------------------ */
-  function runCounter(el) {
-    var target = parseFloat(el.getAttribute('data-count'));
-    var suffix = el.getAttribute('data-suffix') || '';
-    var dur = 1500, t0 = null;
-    function frame(t) {
-      if (t0 === null) t0 = t;
-      var p = Math.min((t - t0) / dur, 1);
-      var eased = 1 - Math.pow(1 - p, 3);
-      var val = target * eased;
-      el.textContent = (target % 1 === 0 ? Math.round(val) : val.toFixed(1)) + suffix;
-      if (p < 1) requestAnimationFrame(frame);
-    }
-    requestAnimationFrame(frame);
-  }
-  var counters = $$('[data-count]');
-  if (counters.length) {
-    if (reduced || !('IntersectionObserver' in window)) {
-      counters.forEach(function (el) {
-        el.textContent = el.getAttribute('data-count') + (el.getAttribute('data-suffix') || '');
-      });
-    } else {
-      var cio = new IntersectionObserver(function (entries) {
-        entries.forEach(function (en) {
-          if (!en.isIntersecting) return;
-          runCounter(en.target);
-          cio.unobserve(en.target);
-        });
-      }, { threshold: 0.6 });
-      counters.forEach(function (el) { cio.observe(el); });
-    }
-  }
+  $$('[data-count]').forEach(function (el) {
+    el.textContent = el.getAttribute('data-count') + (el.getAttribute('data-suffix') || '');
+  });
 
   /* ------------------------------------------------------------------
      Process timeline progressive lighting
@@ -190,9 +100,7 @@
       entries.forEach(function (en) {
         if (!en.isIntersecting) return;
         process.classList.add('is-in');
-        $$('.step', process).forEach(function (s, i) {
-          setTimeout(function () { s.classList.add('is-lit'); }, 220 + i * 260);
-        });
+        $$('.step', process).forEach(function (s) { s.classList.add('is-lit'); });
         pio.disconnect();
       });
     }, { threshold: 0.35 });
@@ -238,43 +146,111 @@
   }
 
   /* ------------------------------------------------------------------
-     Contact form (Web3Forms)
+     Contact form: validate, then submit via Web3Forms
      ------------------------------------------------------------------ */
   var form = $('#abx-form');
   if (form) {
     var status = $('#form-status');
     var submit = $('button[type="submit"]', form);
+
+    function setStatus(msg, kind) {
+      status.textContent = msg;
+      status.className = 'form-status is-on' + (kind ? ' is-' + kind : '');
+    }
+
+    function fieldError(el, msg) {
+      var wrap = el.closest('.field');
+      var note = $('.field-error', wrap);
+      if (!note) {
+        note = document.createElement('p');
+        note.className = 'field-error';
+        note.id = el.id + '-error';
+        wrap.appendChild(note);
+      }
+      note.textContent = msg;
+      el.setAttribute('aria-invalid', 'true');
+      el.setAttribute('aria-describedby', note.id);
+    }
+
+    function clearError(el) {
+      var wrap = el.closest('.field');
+      var note = $('.field-error', wrap);
+      if (note) note.remove();
+      el.removeAttribute('aria-invalid');
+      el.removeAttribute('aria-describedby');
+    }
+
+    function validate() {
+      var problems = [];
+      $$('[required]', form).forEach(function (el) {
+        clearError(el);
+        var val = (el.value || '').trim();
+        if (el.type === 'checkbox') {
+          if (!el.checked) {
+            fieldError(el, 'Please confirm this before sending.');
+            problems.push(el);
+          }
+          return;
+        }
+        if (!val) {
+          fieldError(el, 'This field is required.');
+          problems.push(el);
+        } else if (el.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(val)) {
+          fieldError(el, 'Please enter a valid email address.');
+          problems.push(el);
+        }
+      });
+      return problems;
+    }
+
+    $$('[required]', form).forEach(function (el) {
+      el.addEventListener('input', function () {
+        if (el.getAttribute('aria-invalid')) clearError(el);
+      });
+      el.addEventListener('change', function () {
+        if (el.getAttribute('aria-invalid')) clearError(el);
+      });
+    });
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      var key = form.querySelector('input[name="access_key"]');
-      if (!key || !key.value || key.value.indexOf('YOUR_') === 0) {
-        status.textContent = 'This form is not connected yet. Add your Web3Forms access key in contact.html, or email us directly.';
-        status.classList.add('is-on');
+
+      var problems = validate();
+      if (problems.length) {
+        setStatus('Please correct the highlighted fields before sending.', 'error');
+        problems[0].focus();
         return;
       }
+
+      var key = form.querySelector('input[name="access_key"]');
+      if (!key || !key.value || key.value.indexOf('YOUR_') === 0) {
+        setStatus('This form is not connected yet. Please email us directly instead.', 'error');
+        return;
+      }
+
       var label = submit.textContent;
       submit.disabled = true;
-      submit.textContent = 'Sending…';
-      status.classList.remove('is-on');
+      submit.textContent = 'Sending';
+      setStatus('Sending your message.', '');
+
+      var data = Object.fromEntries(new FormData(form).entries());
 
       fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(Object.fromEntries(new FormData(form).entries()))
+        body: JSON.stringify(data)
       })
         .then(function (r) { return r.json(); })
-        .then(function (data) {
-          status.classList.add('is-on');
-          if (data.success) {
-            status.textContent = 'Thank you — your message has been received. We will respond shortly.';
+        .then(function (res) {
+          if (res.success) {
+            setStatus('Thank you. Your message has been received and we will respond shortly.', 'ok');
             form.reset();
           } else {
-            status.textContent = 'Something went wrong. Please email us directly instead.';
+            setStatus('Something went wrong. Please email us directly instead.', 'error');
           }
         })
         .catch(function () {
-          status.classList.add('is-on');
-          status.textContent = 'Network error. Please email us directly instead.';
+          setStatus('Network error. Please email us directly instead.', 'error');
         })
         .finally(function () {
           submit.disabled = false;
@@ -289,7 +265,7 @@
   $$('[data-year]').forEach(function (el) { el.textContent = new Date().getFullYear(); });
 
   /* ==================================================================
-     Network canvas — interconnected system nodes
+     Network canvas , interconnected system nodes
      ================================================================== */
   function NetworkCanvas(canvas, opts) {
     opts = opts || {};
@@ -299,7 +275,6 @@
     var density = opts.density || 12000;
     var maxNodes = opts.max || 62;
     var linkDist = opts.link || 138;
-    var pointer = { x: -9999, y: -9999, on: false };
 
     function resize() {
       var r = canvas.getBoundingClientRect();
@@ -338,15 +313,6 @@
         if (n.x < -30) n.x = w + 30; if (n.x > w + 30) n.x = -30;
         if (n.y < -30) n.y = h + 30; if (n.y > h + 30) n.y = -30;
 
-        if (pointer.on) {
-          var pdx = n.x - pointer.x, pdy = n.y - pointer.y;
-          var pd = Math.sqrt(pdx * pdx + pdy * pdy);
-          if (pd < 130 && pd > 0.1) {
-            var push = (1 - pd / 130) * 0.55;
-            n.x += (pdx / pd) * push;
-            n.y += (pdy / pd) * push;
-          }
-        }
       }
 
       for (var a = 0; a < nodes.length; a++) {
@@ -383,16 +349,6 @@
         ctx.fill();
         ctx.shadowBlur = 0;
       }
-    }
-
-    if (fine && !reduced) {
-      canvas.parentElement.addEventListener('pointermove', function (e) {
-        var r = canvas.getBoundingClientRect();
-        pointer.x = e.clientX - r.left;
-        pointer.y = e.clientY - r.top;
-        pointer.on = true;
-      }, { passive: true });
-      canvas.parentElement.addEventListener('pointerleave', function () { pointer.on = false; });
     }
 
     var ro = window.ResizeObserver ? new ResizeObserver(resize) : null;

@@ -3,19 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Contact — ABX Intelligence</title>
+<title>Contact | ABX Intelligence</title>
 <meta name="description" content="Tell ABX Intelligence about the process that could work better. Request a consultation and hear back from a founder.">
 <meta name="theme-color" content="#121314">
 <link rel="canonical" href="/contact.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Contact — ABX Intelligence">
+<meta property="og:title" content="Contact | ABX Intelligence">
 <meta property="og:description" content="Tell ABX Intelligence about the process that could work better. Request a consultation and hear back from a founder.">
 <meta property="og:site_name" content="ABX Intelligence">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&display=swap" rel="stylesheet">
+<link rel="preload" href="assets/fonts/instrument-sans-600.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/fonts.css">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -68,6 +67,7 @@
   <div class="container">
     <div class="split">
       <div data-reveal>
+        <h2 class="sr-only">Send us an enquiry</h2>
         <form id="abx-form" class="form" novalidate>
           <!-- ==========================================================
                SETUP: replace YOUR_WEB3FORMS_ACCESS_KEY below with the free
@@ -77,22 +77,28 @@
           <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY">
           <input type="hidden" name="subject" value="New enquiry from abx-intelligence.com">
           <input type="hidden" name="from_name" value="ABX Intelligence Website">
-          <input type="checkbox" name="botcheck" class="skip" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <div class="honeypot" aria-hidden="true">
+            <label for="botcheck">Leave this field empty</label>
+            <input id="botcheck" type="checkbox" name="botcheck" tabindex="-1" autocomplete="off">
+          </div>
 
           <div class="form-row">
             <div class="field">
-              <label for="name">Name</label>
-              <input id="name" name="name" type="text" required placeholder="Your full name">
+              <label for="name">Name <span class="req" aria-hidden="true">*</span></label>
+              <input id="name" name="name" type="text" required autocomplete="name"
+                     placeholder="Your full name">
             </div>
             <div class="field">
-              <label for="email">Email</label>
-              <input id="email" name="email" type="email" required placeholder="you@organization.org">
+              <label for="email">Email <span class="req" aria-hidden="true">*</span></label>
+              <input id="email" name="email" type="email" required autocomplete="email"
+                     placeholder="you@organization.org">
             </div>
           </div>
           <div class="form-row">
             <div class="field">
-              <label for="organization">Organization</label>
-              <input id="organization" name="organization" type="text" placeholder="School or organization name">
+              <label for="organization">Organization <span class="opt">(optional)</span></label>
+              <input id="organization" name="organization" type="text" autocomplete="organization"
+                     placeholder="School or organization name">
             </div>
             <div class="field">
               <label for="topic">What is this about?</label>
@@ -105,18 +111,41 @@
             </div>
           </div>
           <div class="field">
-            <label for="message">Tell us about the process</label>
-            <textarea id="message" name="message" required placeholder="What happens today, who is involved, and where does time get lost?"></textarea>
+            <label for="message">Tell us about the process <span class="req" aria-hidden="true">*</span></label>
+            <textarea id="message" name="message" required
+                      placeholder="What happens today, who is involved, and where does time get lost?"></textarea>
           </div>
+
+          <div class="field consent">
+            <label for="consent" class="consent-label">
+              <input id="consent" name="consent" type="checkbox" value="yes" required>
+              <span>I agree that ABX Intelligence may use the details I have submitted to
+              respond to this enquiry, as described in the
+              <a href="privacy.html">Privacy Policy</a>. <span class="req" aria-hidden="true">*</span></span>
+            </label>
+          </div>
+
+          <p class="form-note">
+            Fields marked <span class="req" aria-hidden="true">*</span><span class="sr-only">with an asterisk</span>
+            are required. We use these details only to reply to you. We do not add you to a
+            mailing list and we do not share them with anyone else.
+          </p>
+
           <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
-          <div class="btn-row" style="justify-content:space-between">
-            <button class="btn btn--primary btn--lg" type="submit">Send message <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
-            <span class="form-note">We reply to every enquiry.</span>
+
+          <div class="btn-row">
+            <button class="btn btn--primary btn--lg" type="submit">Send enquiry</button>
           </div>
+
+          <noscript>
+            <p class="form-note">This form needs JavaScript to send. Please email us at
+              <a href="mailto:hello@abx-intelligence.com">hello@abx-intelligence.com</a> instead.</p>
+          </noscript>
         </form>
       </div>
 
       <div class="split-media stack" data-stagger="0.1">
+        <h2 class="sr-only">Before you write</h2>
         <div class="card" data-reveal>
           <h3 class="h-sm">What to expect</h3>
           <p class="body">A short reply with questions about your process, and an honest view of whether we are the right fit. No sales sequence, no pressure.</p>
@@ -128,7 +157,7 @@
         <div class="card" data-reveal>
           <h3 class="h-sm">Prefer email?</h3>
           <p class="body">Write to us directly at <a class="accent" href="mailto:hello@abx-intelligence.com">hello@abx-intelligence.com</a>.</p>
-          <p class="form-note mt-s">Placeholder address — replace with your live contact email.</p>
+          <p class="form-note mt-s">Placeholder address. Replace with your live contact email.</p>
         </div>
       </div>
     </div>
@@ -147,7 +176,7 @@
         <p>Intelligent Systems. Built for People.</p>
       </div>
       <div>
-        <h4>Company</h4>
+        <h2 class="foot-h">Company</h2>
         <ul>
           <li><a href="about.html">About</a></li>
           <li><a href="approach.html">Our Approach</a></li>
@@ -155,7 +184,7 @@
         </ul>
       </div>
       <div>
-        <h4>What we do</h4>
+        <h2 class="foot-h">What we do</h2>
         <ul>
           <li><a href="solutions.html">Solutions</a></li>
           <li><a href="services.html">Services</a></li>
@@ -163,7 +192,7 @@
         </ul>
       </div>
       <div>
-        <h4>Legal</h4>
+        <h2 class="foot-h">Legal</h2>
         <ul>
           <li><a href="privacy.html">Privacy Policy</a></li>
           <li><a href="terms.html">Terms of Service</a></li>
