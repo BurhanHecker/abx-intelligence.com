@@ -1,110 +1,86 @@
-# ABX Intelligence :  Website
+# ABX Intelligence — website
 
-Static multi-page marketing site. No build step, no dependencies, no WordPress.
+Static site. No build step, no dependencies, no framework.
 
-## Files
+## Structure
 
 ```
-index.html        Homepage (all 13 sections)
-solutions.html    Four solutions in depth + the live platform
-services.html     Full services catalogue with expandable detail
-about.html        Founders, origin, principles, vision
-approach.html     Four-stage process, partnership, FAQ
-contact.html      Contact form  ← needs one setup step, see below
-privacy.html      Privacy Policy
-terms.html        Terms & Conditions
-cookies.html      Cookie Policy
-refunds.html      Payment & Refund Policy
-assets/css/style.css
-assets/css/fonts.css
-assets/js/main.js
-assets/img/favicon.svg
-assets/fonts/          Self-hosted woff2 + OFL.txt license
-robots.txt  sitemap.xml  .htaccess
+public/            <- the website. This is what gets deployed.
+  index.html  solutions.html  services.html  about.html  approach.html
+  contact.html  privacy.html  terms.html  cookies.html  refunds.html
+  404.html
+  assets/css/style.css      design system (all tokens at the top)
+  assets/css/fonts.css      @font-face for the self-hosted fonts
+  assets/js/main.js         interaction layer, vanilla, no libraries
+  assets/fonts/             woff2 + OFL.txt licence
+  assets/img/               logo variants and favicons
+  _headers                  Cloudflare Pages security + cache headers
+  .htaccess                 Apache equivalent, inert on Cloudflare
+  robots.txt  sitemap.xml  favicon.ico
+
+design-source/     Original logo files. NOT deployed.
+COMPLIANCE.md      Legal and risk review. NOT deployed. Read before launch.
 ```
 
-`.claude/` is local tooling :  do not upload it.
-
----
-
-## Deploying to Hostinger
-
-**Do not put this in `wp-content/themes/`.** WordPress only recognises a folder as a
-theme if it contains a `style.css` with a theme header and an `index.php`. This is a
-plain static site, so it goes straight into the web root instead.
-
-1. Hostinger control panel → **Files → File Manager**
-2. Open **`public_html`**
-3. If WordPress is currently installed there and you are replacing it, back it up first
-   (Files → Backups), then remove the old WordPress files from `public_html`.
-   If you want to keep WordPress running elsewhere, move it into a subfolder instead.
-4. Upload **the contents** of this folder into `public_html` :  so that `index.html` sits
-   directly in `public_html`, not inside a subfolder.
-   Easiest route: zip this folder locally, upload the zip, then use File Manager's
-   **Extract** option.
-5. Confirm `.htaccess` uploaded. File Manager hides dotfiles by default : 
-   enable **Settings → Show hidden files** to check.
-6. Visit your domain. That's it.
-
-`.htaccess` gives you optional extensionless URLs (`/solutions` also works),
-gzip compression, cache headers, and basic security headers.
-
----
-
-## One setup step: the contact form
-
-The form on `contact.html` is wired but not connected yet. Static hosting can't send
-email on its own, so it posts to [Web3Forms](https://web3forms.com) (free tier, no account).
-
-1. Go to web3forms.com, enter the email address where you want enquiries to land
-2. They email you an access key
-3. Open `contact.html`, find:
-
-   ```html
-   <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY">
-   ```
-
-4. Replace `YOUR_WEB3FORMS_ACCESS_KEY` with your key and re-upload the file
-
-Until you do, submitting the form shows a message telling the visitor to email instead : 
-it never fails silently.
-
-## Other placeholders to replace
-
-| Where | What |
-|---|---|
-| `contact.html`, `privacy.html`, `terms.html` | `burhan.dairkee@gmail.com` :  swap for your real address |
-| `robots.txt`, `sitemap.xml` | `https://abx-intelligence.com` :  swap for your real domain |
-| all four legal pages | Blocks marked `pending-note` need your real business details |
-| `COMPLIANCE.md` | Read this before launch. Lists what is outstanding and why |
-
-## Editing content
-
-Copy lives directly in the HTML. Colours, spacing, and type scale are all CSS variables
-at the top of `assets/css/style.css` :  change them in one place and the whole site follows.
+Anything outside `public/` is never published. Keep it that way: `COMPLIANCE.md`
+discusses matters that should not be on the public web.
 
 ## Local preview
 
 ```bash
-python3 -m http.server 4321 --directory /Users/burhandairkee/ABX-Intelligence
+python3 -m http.server 4321 --directory ~/ABX-Intelligence/public
 ```
 
 Then open http://localhost:4321
 
-## Cache busting (important)
+## Deploying
 
-`.htaccess` caches CSS, JS, fonts and images for one year. That is correct for
-speed, but it means returning visitors keep the old files unless the URL changes.
-
-Every reference to `style.css`, `fonts.css` and `main.js` carries a version
-query, for example `style.css?v=20260907a`.
-
-**Whenever you change the CSS or JS, bump that version string in all ten HTML
-files, or returning visitors will not see your change.** One command does it:
+The site deploys automatically from GitHub via Cloudflare Pages.
 
 ```bash
-cd ~/ABX-Intelligence && sed -i '' 's/?v=[0-9a-z]*/?v='$(date +%Y%m%d%H%M)'/g' *.html
+git add -A
+git commit -m "describe the change"
+git push
 ```
 
-Images are versioned by filename instead, so if you replace a logo, either
-rename the file or add a version query to it as well.
+That is the whole process. Cloudflare rebuilds and the change is live in
+roughly fifteen seconds. No zips, no file manager, no uploads.
+
+**Cloudflare Pages project settings** (set once, at creation):
+
+| Setting | Value |
+|---|---|
+| Framework preset | None |
+| Build command | *(leave empty)* |
+| Build output directory | `public` |
+
+## Cache busting
+
+`_headers` caches `/assets/*` for a year and forces HTML to revalidate. To make
+sure returning visitors get CSS and JS changes, every reference carries a
+version query, e.g. `style.css?v=20260907a`.
+
+**After changing CSS or JS, bump it:**
+
+```bash
+cd ~/ABX-Intelligence/public && sed -i '' "s/?v=[0-9a-z]*/?v=$(date +%Y%m%d%H%M)/g" *.html
+```
+
+If you replace an image, rename the file rather than overwriting it.
+
+## Still to do before launch
+
+1. Add your Web3Forms access key in `public/contact.html` (free key from
+   web3forms.com). Until then the form tells visitors to email instead.
+2. Replace the `pending-note` blocks in the four legal pages with your real
+   business details. Find them with:
+   `grep -rn pending-note public/`
+3. Read `COMPLIANCE.md`. Items 1 and 2 there matter more than anything on
+   the site itself.
+4. Once every placeholder is gone, delete the `.pending-note` rule from
+   `public/assets/css/style.css`.
+
+## Editing
+
+Copy lives directly in the HTML. Colours, spacing and type scale are CSS custom
+properties at the top of `style.css`; change them there and the whole site follows.
