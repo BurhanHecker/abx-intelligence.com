@@ -108,37 +108,6 @@
   }
 
   /* ------------------------------------------------------------------
-     Pinned platform section: sync the visual to the active step
-     ------------------------------------------------------------------ */
-  (function () {
-    var steps = $$('.pin-step');
-    var screens = $$('.pin-screen');
-    if (!steps.length || !screens.length) return;
-
-    function activate(i) {
-      steps.forEach(function (s, k) { s.classList.toggle('is-active', k === i); });
-      screens.forEach(function (s, k) { s.classList.toggle('is-on', k === i); });
-    }
-    activate(0);
-
-    if (!('IntersectionObserver' in window) || window.innerWidth <= 1024) {
-      steps.forEach(function (s) { s.classList.add('is-active'); });
-      screens.forEach(function (s) { s.classList.add('is-on'); });
-      return;
-    }
-
-    var pio = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (!en.isIntersecting) return;
-        var i = steps.indexOf(en.target);
-        if (i > -1) activate(i);
-      });
-    }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
-
-    steps.forEach(function (s) { pio.observe(s); });
-  })();
-
-  /* ------------------------------------------------------------------
      Accordion
      ------------------------------------------------------------------ */
   $$('.acc-item').forEach(function (item) {
