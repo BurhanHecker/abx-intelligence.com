@@ -25,6 +25,10 @@ COMPLIANCE.md      Legal and risk review. NOT deployed. Read before launch.
 Anything outside `public/` is never published. Keep it that way: `COMPLIANCE.md`
 discusses matters that should not be on the public web.
 
+## Working with someone else
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for collaborator setup and the change workflow.
+
 ## Local preview
 
 ```bash
