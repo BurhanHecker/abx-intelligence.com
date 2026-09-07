@@ -12,7 +12,10 @@
 <meta property="og:description" content="Tell ABX Intelligence about the process that could work better. Request a consultation and hear back from a founder.">
 <meta property="og:site_name" content="ABX Intelligence">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="assets/img/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="icon" href="assets/img/favicon-512.png" type="image/png" sizes="512x512">
+<link rel="apple-touch-icon" href="assets/img/favicon-180.png">
 <link rel="preload" href="assets/fonts/instrument-sans-600.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/fonts.css">
 <link rel="stylesheet" href="assets/css/style.css">
@@ -25,9 +28,13 @@
 
 <header class="nav">
   <div class="container nav-inner">
-    <a class="logo" href="index.html" aria-label="ABX Intelligence home">
-      <span class="logo-mark">A</span>
-      <span class="logo-text">ABX <span>Intelligence</span></span>
+    <a class="logo" href="index.html">
+      <picture>
+        <source media="(max-width:640px)" type="image/webp" srcset="assets/img/logo-mark.webp 1x, assets/img/logo-mark@2x.webp 2x">
+        <source media="(max-width:640px)" type="image/png" srcset="assets/img/logo-mark.png 1x, assets/img/logo-mark@2x.png 2x">
+        <source type="image/webp" srcset="assets/img/logo-lockup.webp 1x, assets/img/logo-lockup@2x.webp 2x">
+        <img src="assets/img/logo-lockup.png" srcset="assets/img/logo-lockup.png 1x, assets/img/logo-lockup@2x.png 2x" alt="ABX Intelligence. Understand. Adapt. Excel." decoding="async">
+      </picture>
     </a>
     <nav class="nav-links" aria-label="Primary">
       <a href="solutions.html">Solutions</a>
@@ -139,7 +146,7 @@
 
           <noscript>
             <p class="form-note">This form needs JavaScript to send. Please email us at
-              <a href="mailto:hello@abx-intelligence.com">hello@abx-intelligence.com</a> instead.</p>
+              <a href="mailto:burhan.dairkee@gmail.com">burhan.dairkee@gmail.com</a> instead.</p>
           </noscript>
         </form>
       </div>
@@ -156,8 +163,8 @@
         </div>
         <div class="card" data-reveal>
           <h3 class="h-sm">Prefer email?</h3>
-          <p class="body">Write to us directly at <a class="accent" href="mailto:hello@abx-intelligence.com">hello@abx-intelligence.com</a>.</p>
-          <p class="form-note mt-s">Placeholder address. Replace with your live contact email.</p>
+          <p class="body">Write to us directly at <a class="accent" href="mailto:burhan.dairkee@gmail.com">burhan.dairkee@gmail.com</a>.</p>
+          
         </div>
       </div>
     </div>
@@ -169,9 +176,11 @@
   <div class="container">
     <div class="footer-top">
       <div class="footer-brand">
-        <a class="logo" href="index.html">
-          <span class="logo-mark">A</span>
-          <span class="logo-text">ABX <span>Intelligence</span></span>
+        <a class="logo logo--foot" href="index.html">
+          <picture>
+            <source type="image/webp" srcset="assets/img/logo-lockup.webp 1x, assets/img/logo-lockup@2x.webp 2x">
+            <img src="assets/img/logo-lockup.png" srcset="assets/img/logo-lockup.png 1x, assets/img/logo-lockup@2x.png 2x" alt="ABX Intelligence" loading="lazy" decoding="async">
+          </picture>
         </a>
         <p>Intelligent Systems. Built for People.</p>
       </div>

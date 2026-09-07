@@ -166,15 +166,16 @@ h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;letter-spacing:-.03e
 }
 .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:24px;width:100%;}
 
-.logo{display:inline-flex;align-items:center;gap:11px;flex:none;}
-.logo-mark{
-  width:32px;height:32px;border-radius:8px;background:var(--red);flex:none;
-  display:grid;place-items:center;font-weight:700;font-size:.82rem;color:#121314;letter-spacing:-.03em;
-  transition:transform .5s var(--ease),box-shadow .5s var(--ease);
+.logo{display:inline-flex;align-items:center;flex:none;height:40px;
+  transition:height .45s var(--ease),opacity .3s var(--ease);}
+.logo picture,.logo img{display:block;height:100%;width:auto;}
+.logo:hover{opacity:.82;}
+.nav.is-stuck .logo{height:34px;}
+.logo--foot{height:38px;margin-bottom:18px;}
+@media (max-width:640px){
+  .logo,.nav.is-stuck .logo{height:34px;}
+  .logo--foot{height:34px;}
 }
-.logo:hover .logo-mark{transform:rotate(-8deg) scale(1.06);box-shadow:0 8px 26px -8px rgba(255,59,33,.85);}
-.logo-text{font-weight:600;font-size:1.02rem;letter-spacing:-.028em;}
-.logo-text span{color:var(--grey);font-weight:500;}
 
 .nav-links{display:flex;align-items:center;gap:4px;}
 .nav-links a{

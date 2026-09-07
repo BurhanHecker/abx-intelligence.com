@@ -13,7 +13,10 @@
 <meta property="og:description" content="The terms that apply to your use of the ABX Intelligence website and to engagements with us.">
 <meta property="og:site_name" content="ABX Intelligence">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="assets/img/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="icon" href="assets/img/favicon-512.png" type="image/png" sizes="512x512">
+<link rel="apple-touch-icon" href="assets/img/favicon-180.png">
 <link rel="preload" href="assets/fonts/instrument-sans-600.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/fonts.css">
 <link rel="stylesheet" href="assets/css/style.css">
@@ -25,9 +28,13 @@
 
 <header class="nav">
   <div class="container nav-inner">
-    <a class="logo" href="index.html" aria-label="ABX Intelligence home">
-      <span class="logo-mark">A</span>
-      <span class="logo-text">ABX <span>Intelligence</span></span>
+    <a class="logo" href="index.html">
+      <picture>
+        <source media="(max-width:640px)" type="image/webp" srcset="assets/img/logo-mark.webp 1x, assets/img/logo-mark@2x.webp 2x">
+        <source media="(max-width:640px)" type="image/png" srcset="assets/img/logo-mark.png 1x, assets/img/logo-mark@2x.png 2x">
+        <source type="image/webp" srcset="assets/img/logo-lockup.webp 1x, assets/img/logo-lockup@2x.webp 2x">
+        <img src="assets/img/logo-lockup.png" srcset="assets/img/logo-lockup.png 1x, assets/img/logo-lockup@2x.png 2x" alt="ABX Intelligence. Understand. Adapt. Excel." decoding="async">
+      </picture>
     </a>
     <nav class="nav-links" aria-label="Primary">
       <a href="solutions.html">Solutions</a>
@@ -68,7 +75,7 @@
   <div class="container">
     <div class="legal" data-reveal><h2>Who we are</h2><p>ABX Intelligence is a software development business founded by Burhan Dairkee and
 Advaith Prem, building custom software for schools and organizations. We are based in Oman.</p><p class="pending-note"><strong>To complete before launch:</strong> add your registered trading name, commercial registration (CR) number issued by the Ministry of Commerce, Industry and Investment Promotion, registered address, and a contact telephone number. Until ABX Intelligence is registered, do not describe it on this website as a registered company.</p><p>You can reach us at
-<a class="accent" href="mailto:hello@abx-intelligence.com">hello@abx-intelligence.com</a>.</p><p class="pending-note"><strong>To complete before launch:</strong> replace hello@abx-intelligence.com everywhere on the site with the address you actually monitor.</p><h2>Accepting these terms</h2><p>By using this website you accept these terms. If you do not accept
+<a class="accent" href="mailto:burhan.dairkee@gmail.com">burhan.dairkee@gmail.com</a>.</p><h2>Accepting these terms</h2><p>By using this website you accept these terms. If you do not accept
     them, please do not use the site.</p><h2>What this website is</h2><p>This website describes what ABX Intelligence does. Its content is
     general information. Nothing on it is an offer, a quotation, a commitment to provide services, or
     a contract, and nothing on it should be treated as professional advice for your situation.</p>
@@ -106,7 +113,7 @@ Advaith Prem, building custom software for schools and organizations. We are bas
     of Oman have jurisdiction over any dispute arising from this website or these terms.</p><p class="pending-note"><strong>To complete before launch:</strong> confirm this is the jurisdiction you want, particularly if you take on clients outside Oman.</p><h2>Changes to these terms</h2><p>We may update these terms. The version published here at the time
     you use the site is the version that applies, and the date at the top shows when it last
     changed.</p><h2>Contact</h2><p>Questions about these terms can be sent to
-    <a class="accent" href="mailto:hello@abx-intelligence.com">hello@abx-intelligence.com</a>.</p><h2>A note on these pages</h2><p class="pending-note"><strong>Important:</strong> these pages were drafted as a
+    <a class="accent" href="mailto:burhan.dairkee@gmail.com">burhan.dairkee@gmail.com</a>.</p><h2>A note on these pages</h2><p class="pending-note"><strong>Important:</strong> these pages were drafted as a
 careful starting point, not as legal advice. Before you rely on them, have them reviewed by a lawyer
 qualified in Oman, and confirm that every factual statement matches what ABX Intelligence actually
 does.</p></div>
@@ -118,9 +125,11 @@ does.</p></div>
   <div class="container">
     <div class="footer-top">
       <div class="footer-brand">
-        <a class="logo" href="index.html">
-          <span class="logo-mark">A</span>
-          <span class="logo-text">ABX <span>Intelligence</span></span>
+        <a class="logo logo--foot" href="index.html">
+          <picture>
+            <source type="image/webp" srcset="assets/img/logo-lockup.webp 1x, assets/img/logo-lockup@2x.webp 2x">
+            <img src="assets/img/logo-lockup.png" srcset="assets/img/logo-lockup.png 1x, assets/img/logo-lockup@2x.png 2x" alt="ABX Intelligence" loading="lazy" decoding="async">
+          </picture>
         </a>
         <p>Intelligent Systems. Built for People.</p>
       </div>

@@ -73,7 +73,7 @@ it never fails silently.
 
 | Where | What |
 |---|---|
-| `contact.html`, `privacy.html`, `terms.html` | `hello@abx-intelligence.com` :  swap for your real address |
+| `contact.html`, `privacy.html`, `terms.html` | `burhan.dairkee@gmail.com` :  swap for your real address |
 | `robots.txt`, `sitemap.xml` | `https://abx-intelligence.com` :  swap for your real domain |
 | all four legal pages | Blocks marked `pending-note` need your real business details |
 | `COMPLIANCE.md` | Read this before launch. Lists what is outstanding and why |
