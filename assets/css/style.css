@@ -166,16 +166,20 @@ h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;letter-spacing:-.03e
 }
 .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:24px;width:100%;}
 
-.logo{display:inline-flex;align-items:center;flex:none;height:40px;
+.logo{display:inline-flex;align-items:center;flex:none;height:33px;
   transition:height .45s var(--ease),opacity .3s var(--ease);}
 .logo picture,.logo img{display:block;height:100%;width:auto;}
 .logo:hover{opacity:.82;}
-.nav.is-stuck .logo{height:34px;}
-.logo--foot{height:38px;margin-bottom:18px;}
+.nav.is-stuck .logo{height:29px;}
+.logo--foot{height:36px;margin-bottom:18px;}
 @media (max-width:640px){
-  .logo,.nav.is-stuck .logo{height:34px;}
-  .logo--foot{height:34px;}
+  .logo,.nav.is-stuck .logo{height:30px;}
+  .logo--foot{height:32px;}
 }
+
+/* The nav sits in a wider, tighter gutter than the page content, so the
+   logo reads as anchored to the edge rather than floating inward. */
+.nav .container{max-width:1440px;padding-inline:clamp(16px,2.6vw,34px);}
 
 .nav-links{display:flex;align-items:center;gap:4px;}
 .nav-links a{

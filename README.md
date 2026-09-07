@@ -90,3 +90,21 @@ python3 -m http.server 4321 --directory /Users/burhandairkee/ABX-Intelligence
 ```
 
 Then open http://localhost:4321
+
+## Cache busting (important)
+
+`.htaccess` caches CSS, JS, fonts and images for one year. That is correct for
+speed, but it means returning visitors keep the old files unless the URL changes.
+
+Every reference to `style.css`, `fonts.css` and `main.js` carries a version
+query, for example `style.css?v=20260907a`.
+
+**Whenever you change the CSS or JS, bump that version string in all ten HTML
+files, or returning visitors will not see your change.** One command does it:
+
+```bash
+cd ~/ABX-Intelligence && sed -i '' 's/?v=[0-9a-z]*/?v='$(date +%Y%m%d%H%M)'/g' *.html
+```
+
+Images are versioned by filename instead, so if you replace a logo, either
+rename the file or add a version query to it as well.
