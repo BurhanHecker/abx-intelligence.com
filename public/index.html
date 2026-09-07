@@ -17,8 +17,8 @@
 <link rel="icon" href="/assets/img/favicon-512.png" type="image/png" sizes="512x512">
 <link rel="apple-touch-icon" href="/assets/img/favicon-180.png">
 <link rel="preload" href="/assets/fonts/instrument-sans-600.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/css/fonts.css?v=20260907a">
-<link rel="stylesheet" href="/assets/css/style.css?v=20260907a">
+<link rel="stylesheet" href="/assets/css/fonts.css?v=202609072110">
+<link rel="stylesheet" href="/assets/css/style.css?v=202609072110">
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
@@ -74,72 +74,78 @@
 
 <!-- ================= HERO ================= -->
 <section class="hero">
-  <div class="hero-bg" aria-hidden="true">
-    <canvas data-network data-density="11000" data-max="70" data-link="145"></canvas>
-  </div>
-  <div class="container hero-grid">
-    <div class="hero-copy" data-stagger="0.09">
+  <div class="hero-bg" aria-hidden="true"></div>
+
+  <div class="container">
+    <div class="hero-copy" data-stagger="0.08">
       <span class="eyebrow" data-reveal>Intelligent Systems. Built for People.</span>
-      <h1 class="h-xl" data-reveal>Custom software for schools.<br><span class="accent">Less work done by hand.</span></h1>
-      <p class="lead" data-reveal>We build student and staff portals, automate the manual routines that eat administrative time, and keep the systems running afterwards. Everything is built for one school, around the way that school already works.</p>
+      <h1 class="h-xl" data-reveal>Custom software<br>for schools.<br><span class="accent">Less work done by hand.</span></h1>
+      <p class="lead" data-reveal>Student and staff portals, and the automation that removes the routines eating your administrative day. Built for one school, around the way it already works.</p>
       <div class="btn-row" data-reveal>
-        <a class="btn btn--primary btn--lg" href="/solutions">
-          Explore Our Solutions
-          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-        </a>
+        <a class="btn btn--primary btn--lg" href="/solutions">Explore our solutions <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
         <a class="btn btn--ghost btn--lg" href="/contact">Talk to ABX</a>
       </div>
       <p class="trust" data-reveal>
-        <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1.5 14 4v4c0 3.2-2.4 5.9-6 6.5C4.4 13.9 2 11.2 2 8V4l6-2.5Z"/><path d="m5.6 8 1.7 1.7L10.6 6"/></svg>
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 1.5 14 4v4c0 3.2-2.4 5.9-6 6.5C4.4 13.9 2 11.2 2 8V4l6-2.5Z"/><path d="m5.6 8 1.7 1.7L10.6 6"/></svg>
         Built by students. Designed for real-world impact.
       </p>
     </div>
+  </div>
 
-    <div class="hero-visual" data-reveal data-delay="0.25">
-      <div class="mock" aria-hidden="true">
-        <div class="mock-bar">
-          <span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-dot"></span>
-          <span class="mock-title">ABX Operations Console</span>
+  <div class="hero-stage" data-reveal data-delay="0.18">
+    <div class="stage-inner">
+      <div class="app" aria-hidden="true">
+        <div class="app-chrome">
+          <span class="app-dot"></span><span class="app-dot"></span><span class="app-dot"></span>
+          <span class="app-url">abx / operations console</span>
         </div>
-        <div class="mock-body">
-          <aside class="mock-side">
-            <span class="mock-nav is-on"><i></i>Overview</span>
-            <span class="mock-nav"><i></i>Workflows</span>
-            <span class="mock-nav"><i></i>Directory</span>
-            <span class="mock-nav"><i></i>Approvals</span>
-            <span class="mock-nav"><i></i>Reporting</span>
-            <span class="mock-nav"><i></i>Settings</span>
+        <div class="app-body">
+          <aside class="app-rail">
+            <span class="app-brand">ABX</span>
+            <span class="app-nav is-on"><i></i>Overview</span>
+            <span class="app-nav"><i></i>Workflows</span>
+            <span class="app-nav"><i></i>Directory</span>
+            <span class="app-nav"><i></i>Approvals</span>
+            <span class="app-nav"><i></i>Reporting</span>
+            <span class="app-nav"><i></i>Settings</span>
+            <span class="app-rail-foot"><i></i>Operational</span>
           </aside>
-          <div class="mock-main">
-            <div class="mock-tiles">
-              <div class="mock-tile"><small>Active</small><b>Workflows</b></div>
-              <div class="mock-tile is-red"><small>Automated</small><b>Requests</b></div>
-              <div class="mock-tile"><small>Connected</small><b>Systems</b></div>
+          <div class="app-main">
+            <div class="app-head">
+              <div>
+                <span class="app-eyebrow">Overview</span>
+                <h3 class="app-h">This week</h3>
+              </div>
+              <span class="app-chip">Live</span>
             </div>
-            <div class="mock-chart">
-              <i style="height:38%;animation-delay:.05s"></i>
-              <i style="height:56%;animation-delay:.1s"></i>
-              <i style="height:44%;animation-delay:.15s"></i>
-              <i style="height:72%;animation-delay:.2s"></i>
-              <i style="height:60%;animation-delay:.25s"></i>
-              <i class="is-red" style="height:92%;animation-delay:.3s"></i>
-              <i style="height:68%;animation-delay:.35s"></i>
-              <i style="height:80%;animation-delay:.4s"></i>
+            <div class="app-kpis">
+              <div class="kpi"><small>Requests routed</small><b>Automatically</b><span class="kpi-bar"><i style="width:78%"></i></span></div>
+              <div class="kpi is-red"><small>Manual re-entry</small><b>Removed</b><span class="kpi-bar"><i style="width:96%"></i></span></div>
+              <div class="kpi"><small>Systems connected</small><b>In sync</b><span class="kpi-bar"><i style="width:64%"></i></span></div>
             </div>
-            <div class="mock-rows">
-              <div class="mock-row"><span>Form submission routed</span><span class="mock-pill is-ok">Auto</span></div>
-              <div class="mock-row"><span>Approval requested</span><span class="mock-pill">Queued</span></div>
-              <div class="mock-row"><span>Record synchronised</span><span class="mock-pill is-ok">Auto</span></div>
+            <div class="app-split">
+              <div class="app-panel">
+                <span class="app-panel-h">Throughput</span>
+                <div class="app-chart">
+                  <i style="height:34%"></i><i style="height:52%"></i><i style="height:41%"></i>
+                  <i style="height:68%"></i><i style="height:57%"></i><i class="is-red" style="height:92%"></i>
+                  <i style="height:71%"></i><i style="height:80%"></i><i style="height:63%"></i>
+                  <i style="height:74%"></i><i style="height:58%"></i><i style="height:86%"></i>
+                </div>
+              </div>
+              <div class="app-panel">
+                <span class="app-panel-h">Activity</span>
+                <div class="app-rows">
+                  <div class="app-row"><span>Form submission routed</span><em class="is-ok">Auto</em></div>
+                  <div class="app-row"><span>Approval requested</span><em>Queued</em></div>
+                  <div class="app-row"><span>Record synchronised</span><em class="is-ok">Auto</em></div>
+                  <div class="app-row"><span>Reminder dispatched</span><em class="is-ok">Sent</em></div>
+                  <div class="app-row"><span>Weekly report generated</span><em>Ready</em></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="float-badge float-badge--a">
-        <span class="pulse"></span>
-        <span><small>Status</small>Systems operational</span>
-      </div>
-      <div class="float-badge float-badge--b">
-        <span><small>Built for</small>Students &amp; Staff</span>
       </div>
     </div>
   </div>
@@ -152,8 +158,8 @@
       <div data-stagger="0.08">
         <span class="eyebrow" data-reveal>Why we exist</span>
         <h2 class="h-lg" data-reveal>We Don't Just Build Software. We Build Systems People <span class="accent">Depend On</span>.</h2>
-        <p class="lead mt-m" data-reveal>Most organizations are asked to bend their processes around generic, off-the-shelf products. We work the other way around. We study how your people actually work: the handoffs, the paperwork, the repeated requests. Then we design software that fits that reality.</p>
-        <p class="body mt-s" data-reveal>ABX Intelligence has already designed and deployed customized digital systems inside a real school environment, where they are used by students and staff as part of everyday operations. That grounding shapes everything we build: software is only successful when the people using it stop noticing it.</p>
+        <p class="lead mt-m" data-reveal>Most software asks an organization to bend around it. We work the other way: we study how your people actually work, then build to fit.</p>
+        <p class="body mt-s" data-reveal>Our systems already run inside a real school, used by students and staff every day. That grounding shapes everything we build. Software is only successful when the people using it stop noticing it.</p>
         <div class="btn-row mt-m" data-reveal>
           <a class="link-arrow" href="/approach">See how we work
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
@@ -190,7 +196,7 @@
     <div class="section-head">
       <span class="eyebrow" data-reveal>Solutions</span>
       <h2 class="h-lg" data-reveal>Solutions Designed <span class="accent">Around You</span></h2>
-      <p class="lead" data-reveal>Four core capabilities, each shaped to the organization it serves rather than delivered from a template.</p>
+      <p class="lead" data-reveal>Four capabilities, each shaped to the organization it serves.</p>
     </div>
 
     <div class="grid g-4" data-stagger="0.09">
@@ -249,99 +255,121 @@
   </div>
 </section>
 
-<!-- ================= CURRENT PLATFORM ================= -->
-<section class="section section--line section--panel" id="platform">
+<!-- ================= CURRENT PLATFORM (pinned) ================= -->
+<section class="section section--line section--panel pinned" id="platform">
   <div class="container">
     <div class="section-head">
       <span class="eyebrow" data-reveal>In production</span>
-      <h2 class="h-lg" data-reveal>Already Transforming <span class="accent">School Operations</span></h2>
-      <p class="lead" data-reveal>ABX Intelligence has developed interconnected platforms for both students and staff, creating a centralized digital environment tailored to the school's unique requirements.</p>
+      <h2 class="h-lg" data-reveal>Already running a <span class="accent">school</span>.</h2>
+      <p class="lead" data-reveal>Two portals, one system. Built for a real school, in use by students and staff every day.</p>
     </div>
 
-    <div class="grid g-2" data-stagger="0.14">
-      <!-- Student Portal -->
-      <article class="card" data-reveal>
-        <span class="card-num">STUDENT PORTAL</span>
-        <h3 class="h-md" style="margin-bottom:12px">Designed around the student day</h3>
-        <p class="body">A centralized experience designed around student needs, communication, access to services, and everyday school activities.</p>
-        <div class="mt-m">
-          <div class="mock" aria-hidden="true">
-            <div class="mock-bar">
-              <span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-dot"></span>
-              <span class="mock-title">Student Portal</span>
-            </div>
-            <div class="mock-body">
-              <aside class="mock-side">
-                <span class="mock-nav is-on"><i></i>Today</span>
-                <span class="mock-nav"><i></i>Schedule</span>
-                <span class="mock-nav"><i></i>Requests</span>
-                <span class="mock-nav"><i></i>Resources</span>
-                <span class="mock-nav"><i></i>Notices</span>
-              </aside>
-              <div class="mock-main">
-                <div class="mock-tiles">
-                  <div class="mock-tile"><small>Today</small><b>Schedule</b></div>
-                  <div class="mock-tile is-red"><small>Open</small><b>Requests</b></div>
-                  <div class="mock-tile"><small>New</small><b>Notices</b></div>
-                </div>
-                <div class="mock-rows">
-                  <div class="mock-row"><span>Submit a form</span><span class="mock-pill is-ok">1 step</span></div>
-                  <div class="mock-row"><span>Check announcements</span><span class="mock-pill">Live</span></div>
-                  <div class="mock-row"><span>Access resources</span><span class="mock-pill">Ready</span></div>
-                  <div class="mock-row"><span>Track a request</span><span class="mock-pill is-ok">Active</span></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
+    <div class="pin-grid">
+      <div class="pin-copy">
+        <article class="pin-step" data-step="0">
+          <span class="pin-num">01</span>
+          <h3 class="h-md">Student portal</h3>
+          <p class="body">Timetable, notices, forms and requests in one place. Everything a student needs sits one click from the front page.</p>
+        </article>
+        <article class="pin-step" data-step="1">
+          <span class="pin-num">02</span>
+          <h3 class="h-md">Staff portal</h3>
+          <p class="body">Approvals route themselves. Records stay in sync. Reports build without anyone assembling them by hand.</p>
+        </article>
+        <article class="pin-step" data-step="2">
+          <span class="pin-num">03</span>
+          <h3 class="h-md">One system, not two</h3>
+          <p class="body">A request raised on the student side arrives already structured on the staff side. That connection is where the time is saved.</p>
+        </article>
+      </div>
 
-      <!-- Staff Portal -->
-      <article class="card" data-reveal>
-        <span class="card-num">STAFF PORTAL</span>
-        <h3 class="h-md" style="margin-bottom:12px">Administrative work, streamlined</h3>
-        <p class="body">Powerful tools designed to simplify administrative workflows, improve accessibility, and reduce repetitive manual processes.</p>
-        <div class="mt-m">
-          <div class="mock" aria-hidden="true">
-            <div class="mock-bar">
-              <span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-dot"></span>
-              <span class="mock-title">Staff Portal</span>
+      <div class="pin-visual">
+        <div class="pin-sticky">
+          <div class="pin-screen" data-screen="0" aria-hidden="true">
+          <div class="app">
+            <div class="app-chrome">
+              <span class="app-dot"></span><span class="app-dot"></span><span class="app-dot"></span>
+              <span class="app-url">abx / student-portal</span>
             </div>
-            <div class="mock-body">
-              <aside class="mock-side">
-                <span class="mock-nav is-on"><i></i>Dashboard</span>
-                <span class="mock-nav"><i></i>Approvals</span>
-                <span class="mock-nav"><i></i>Records</span>
-                <span class="mock-nav"><i></i>Automation</span>
-                <span class="mock-nav"><i></i>Reports</span>
+            <div class="app-body">
+              <aside class="app-rail">
+                <span class="app-brand">ABX</span>
+                <span class="app-nav is-on"><i></i>Today</span><span class="app-nav"><i></i>Schedule</span><span class="app-nav"><i></i>Requests</span><span class="app-nav"><i></i>Resources</span><span class="app-nav"><i></i>Notices</span>
+                <span class="app-rail-foot"><i></i>Operational</span>
               </aside>
-              <div class="mock-main">
-                <div class="mock-chart">
-                  <i style="height:46%;animation-delay:.05s"></i>
-                  <i style="height:62%;animation-delay:.1s"></i>
-                  <i style="height:52%;animation-delay:.15s"></i>
-                  <i class="is-red" style="height:88%;animation-delay:.2s"></i>
-                  <i style="height:70%;animation-delay:.25s"></i>
-                  <i style="height:58%;animation-delay:.3s"></i>
-                  <i style="height:76%;animation-delay:.35s"></i>
+              <div class="app-main">
+                <div class="app-head">
+                  <div><span class="app-eyebrow">Student portal</span><h3 class="app-h">Your day</h3></div>
+                  <span class="app-chip">Live</span>
                 </div>
-                <div class="mock-rows">
-                  <div class="mock-row"><span>Approval queue</span><span class="mock-pill is-ok">Routed</span></div>
-                  <div class="mock-row"><span>Records updated</span><span class="mock-pill is-ok">Synced</span></div>
-                  <div class="mock-row"><span>Weekly report</span><span class="mock-pill">Generated</span></div>
+                <div class="app-kpis"><div class="kpi"><small>Timetable</small><b>Today</b><span class="kpi-bar"><i style="width:82%"></i></span></div><div class="kpi is-red"><small>Open requests</small><b>Tracked</b><span class="kpi-bar"><i style="width:58%"></i></span></div><div class="kpi"><small>Notices</small><b>3 new</b><span class="kpi-bar"><i style="width:44%"></i></span></div></div>
+                <div class="app-panel" style="flex:1">
+                  <span class="app-panel-h">Activity</span>
+                  <div class="app-rows"><div class="app-row"><span>Submit an absence form</span><em class="is-ok">1 step</em></div><div class="app-row"><span>Check announcements</span><em class="">Live</em></div><div class="app-row"><span>Book a resource</span><em class="">Open</em></div><div class="app-row"><span>Track a request</span><em class="is-ok">Active</em></div></div>
                 </div>
-                <div class="mock-lines"><i></i><i></i><i></i></div>
               </div>
             </div>
           </div>
         </div>
-      </article>
+          <div class="pin-screen" data-screen="1" aria-hidden="true">
+          <div class="app">
+            <div class="app-chrome">
+              <span class="app-dot"></span><span class="app-dot"></span><span class="app-dot"></span>
+              <span class="app-url">abx / staff-portal</span>
+            </div>
+            <div class="app-body">
+              <aside class="app-rail">
+                <span class="app-brand">ABX</span>
+                <span class="app-nav is-on"><i></i>Dashboard</span><span class="app-nav"><i></i>Approvals</span><span class="app-nav"><i></i>Records</span><span class="app-nav"><i></i>Automation</span><span class="app-nav"><i></i>Reports</span>
+                <span class="app-rail-foot"><i></i>Operational</span>
+              </aside>
+              <div class="app-main">
+                <div class="app-head">
+                  <div><span class="app-eyebrow">Staff portal</span><h3 class="app-h">Approvals</h3></div>
+                  <span class="app-chip">Live</span>
+                </div>
+                <div class="app-kpis"><div class="kpi"><small>In queue</small><b>Routed</b><span class="kpi-bar"><i style="width:71%"></i></span></div><div class="kpi is-red"><small>Re-keyed by hand</small><b>None</b><span class="kpi-bar"><i style="width:96%"></i></span></div><div class="kpi"><small>Reports</small><b>Generated</b><span class="kpi-bar"><i style="width:63%"></i></span></div></div>
+                <div class="app-panel" style="flex:1">
+                  <span class="app-panel-h">Activity</span>
+                  <div class="app-rows"><div class="app-row"><span>Approval routed to head of year</span><em class="is-ok">Auto</em></div><div class="app-row"><span>Record updated across systems</span><em class="is-ok">Synced</em></div><div class="app-row"><span>Cover arranged</span><em class="">Queued</em></div><div class="app-row"><span>Weekly report generated</span><em class="">Ready</em></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+          <div class="pin-screen" data-screen="2" aria-hidden="true">
+          <div class="app">
+            <div class="app-chrome">
+              <span class="app-dot"></span><span class="app-dot"></span><span class="app-dot"></span>
+              <span class="app-url">abx / one-system</span>
+            </div>
+            <div class="app-body">
+              <aside class="app-rail">
+                <span class="app-brand">ABX</span>
+                <span class="app-nav"><i></i>Overview</span><span class="app-nav is-on"><i></i>Workflows</span><span class="app-nav"><i></i>Directory</span><span class="app-nav"><i></i>Approvals</span><span class="app-nav"><i></i>Reporting</span>
+                <span class="app-rail-foot"><i></i>Operational</span>
+              </aside>
+              <div class="app-main">
+                <div class="app-head">
+                  <div><span class="app-eyebrow">One system</span><h3 class="app-h">Connected</h3></div>
+                  <span class="app-chip">In sync</span>
+                </div>
+                <div class="app-kpis"><div class="kpi"><small>Student side</small><b>Submits</b><span class="kpi-bar"><i style="width:88%"></i></span></div><div class="kpi"><small>Staff side</small><b>Receives</b><span class="kpi-bar"><i style="width:88%"></i></span></div><div class="kpi is-red"><small>Between them</small><b>No re-entry</b><span class="kpi-bar"><i style="width:96%"></i></span></div></div>
+                <div class="app-panel" style="flex:1">
+                  <span class="app-panel-h">Activity</span>
+                  <div class="app-rows"><div class="app-row"><span>Request raised by student</span><em class="is-ok">Received</em></div><div class="app-row"><span>Arrives structured for staff</span><em class="is-ok">No re-entry</em></div><div class="app-row"><span>Decision returns to student</span><em class="is-ok">Auto</em></div><div class="app-row"><span>Both records updated once</span><em class="is-ok">Synced</em></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
     </div>
 
     <div class="btn-row mt-l" data-reveal>
-      <a class="btn btn--primary" href="/solutions#platform">
-        View Our Platform
-        <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      <a class="btn btn--primary" href="/solutions#platform">View our platform
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
       </a>
     </div>
   </div>
@@ -385,7 +413,7 @@
     <div class="section-head">
       <span class="eyebrow" data-reveal>How we work</span>
       <h2 class="h-lg" data-reveal>From Problem to <span class="accent">Platform</span></h2>
-      <p class="lead" data-reveal>A deliberate, four-stage path from the first conversation to a system your organization relies on every day.</p>
+      <p class="lead" data-reveal>From the first conversation to a system you rely on daily.</p>
     </div>
 
     <div class="process" data-reveal>
@@ -426,7 +454,7 @@
     <div class="section-head">
       <span class="eyebrow" data-reveal>Services</span>
       <h2 class="h-lg" data-reveal>What We <span class="accent">Build</span></h2>
-      <p class="lead" data-reveal>A working catalogue, not a boundary. If your organization depends on a process, we can build the system that runs it.</p>
+      <p class="lead" data-reveal>A working catalogue, not a boundary.</p>
     </div>
 
     <div class="svc-grid" data-reveal>
@@ -449,7 +477,7 @@
     </div>
 
     <div class="btn-row mt-l" data-reveal>
-      <p class="body" style="flex:1;min-width:260px">This list reflects what we build most often. It is not the limit of what we can build. If the system you need isn't here, it's still worth a conversation.</p>
+      <p class="body" style="flex:1;min-width:260px">This is what we build most often, not the limit of what we can build.</p>
       <a class="btn btn--ghost" href="/services">Full services catalogue</a>
     </div>
   </div>
@@ -457,7 +485,6 @@
 
 <!-- ================= VISION ================= -->
 <section class="section vision">
-  <canvas data-network data-density="16000" data-max="52" data-link="160" aria-hidden="true"></canvas>
   <div class="container">
     <div style="max-width:780px">
       <span class="eyebrow" data-reveal>Long-term vision</span>
@@ -479,7 +506,7 @@
         <span class="eyebrow" data-reveal>About ABX</span>
         <h2 class="h-lg" data-reveal>Two Founders. <span class="accent">One Vision</span>.</h2>
         <p class="lead mt-m" data-reveal>ABX Intelligence was founded by students who experienced the inefficiencies of existing systems firsthand and decided to build better solutions themselves.</p>
-        <p class="body mt-s" data-reveal>That perspective is a structural advantage. We understand the users of school software from the inside: how information actually moves, where processes break down, and what people quietly work around every day. We build with that knowledge, and we hold ourselves to professional standards: clear scope, written agreements, and a long-term commitment to the systems we deploy.</p>
+        <p class="body mt-s" data-reveal>That perspective is a structural advantage. We know how information really moves through a school, and what people quietly work around. We build with that knowledge, under clear scope and written agreements.</p>
         <div class="btn-row mt-m" data-reveal>
           <a class="link-arrow" href="/about">More about ABX Intelligence
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
@@ -527,7 +554,7 @@
       <div data-stagger="0.08">
         <span class="eyebrow" data-reveal>Partnership</span>
         <h2 class="h-lg" data-reveal>A Technology Partner, <span class="accent">Not Just a Vendor</span>.</h2>
-        <p class="lead mt-m" data-reveal>Deployment is the beginning of the relationship, not the end of it. Once a system goes live, it becomes part of how an organization operates, and it needs someone accountable for keeping it that way.</p>
+        <p class="lead mt-m" data-reveal>Deployment is the beginning, not the end. Once a system goes live it becomes part of how you operate, and it needs someone accountable for keeping it that way.</p>
         <p class="body mt-s" data-reveal>ABX Intelligence stays involved for the long term: monitoring, patching, improving, and extending the platforms we build as requirements shift. Continuity is the point.</p>
       </div>
     </div>
@@ -600,6 +627,6 @@
   </div>
 </footer>
 
-<script src="/assets/js/main.js?v=20260907a" defer></script>
+<script src="/assets/js/main.js?v=202609072110" defer></script>
 </body>
 </html>

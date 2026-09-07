@@ -108,6 +108,37 @@
   }
 
   /* ------------------------------------------------------------------
+     Pinned platform section: sync the visual to the active step
+     ------------------------------------------------------------------ */
+  (function () {
+    var steps = $$('.pin-step');
+    var screens = $$('.pin-screen');
+    if (!steps.length || !screens.length) return;
+
+    function activate(i) {
+      steps.forEach(function (s, k) { s.classList.toggle('is-active', k === i); });
+      screens.forEach(function (s, k) { s.classList.toggle('is-on', k === i); });
+    }
+    activate(0);
+
+    if (!('IntersectionObserver' in window) || window.innerWidth <= 1024) {
+      steps.forEach(function (s) { s.classList.add('is-active'); });
+      screens.forEach(function (s) { s.classList.add('is-on'); });
+      return;
+    }
+
+    var pio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        var i = steps.indexOf(en.target);
+        if (i > -1) activate(i);
+      });
+    }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+
+    steps.forEach(function (s) { pio.observe(s); });
+  })();
+
+  /* ------------------------------------------------------------------
      Accordion
      ------------------------------------------------------------------ */
   $$('.acc-item').forEach(function (item) {
@@ -264,112 +295,4 @@
      ------------------------------------------------------------------ */
   $$('[data-year]').forEach(function (el) { el.textContent = new Date().getFullYear(); });
 
-  /* ==================================================================
-     Network canvas , interconnected system nodes
-     ================================================================== */
-  function NetworkCanvas(canvas, opts) {
-    opts = opts || {};
-    var ctx = canvas.getContext('2d');
-    var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    var nodes = [], w = 0, h = 0, raf = null, visible = true;
-    var density = opts.density || 12000;
-    var maxNodes = opts.max || 62;
-    var linkDist = opts.link || 138;
-
-    function resize() {
-      var r = canvas.getBoundingClientRect();
-      w = r.width; h = r.height;
-      if (w === 0 || h === 0) return;
-      canvas.width = Math.round(w * dpr);
-      canvas.height = Math.round(h * dpr);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      build();
-    }
-
-    function build() {
-      var count = Math.min(maxNodes, Math.max(18, Math.round((w * h) / density)));
-      nodes = [];
-      for (var i = 0; i < count; i++) {
-        nodes.push({
-          x: Math.random() * w,
-          y: Math.random() * h,
-          vx: (Math.random() - 0.5) * 0.19,
-          vy: (Math.random() - 0.5) * 0.19,
-          r: Math.random() * 1.5 + 0.9,
-          hot: Math.random() < 0.16,
-          ph: Math.random() * Math.PI * 2
-        });
-      }
-    }
-
-    function draw(t) {
-      raf = requestAnimationFrame(draw);
-      if (!visible || w === 0) return;
-      ctx.clearRect(0, 0, w, h);
-
-      for (var i = 0; i < nodes.length; i++) {
-        var n = nodes[i];
-        n.x += n.vx; n.y += n.vy;
-        if (n.x < -30) n.x = w + 30; if (n.x > w + 30) n.x = -30;
-        if (n.y < -30) n.y = h + 30; if (n.y > h + 30) n.y = -30;
-
-      }
-
-      for (var a = 0; a < nodes.length; a++) {
-        for (var b = a + 1; b < nodes.length; b++) {
-          var dx = nodes[a].x - nodes[b].x, dy = nodes[a].y - nodes[b].y;
-          var d = Math.sqrt(dx * dx + dy * dy);
-          if (d > linkDist) continue;
-          var alpha = (1 - d / linkDist) * 0.4;
-          var hot = nodes[a].hot || nodes[b].hot;
-          ctx.strokeStyle = hot
-            ? 'rgba(255,59,33,' + (alpha * 0.85).toFixed(3) + ')'
-            : 'rgba(142,145,143,' + (alpha * 0.6).toFixed(3) + ')';
-          ctx.lineWidth = 0.7;
-          ctx.beginPath();
-          ctx.moveTo(nodes[a].x, nodes[a].y);
-          ctx.lineTo(nodes[b].x, nodes[b].y);
-          ctx.stroke();
-        }
-      }
-
-      for (var k = 0; k < nodes.length; k++) {
-        var p = nodes[k];
-        var pulse = 0.65 + Math.sin(t / 900 + p.ph) * 0.35;
-        if (p.hot) {
-          ctx.fillStyle = 'rgba(255,59,33,' + (0.55 + pulse * 0.4).toFixed(3) + ')';
-          ctx.shadowColor = 'rgba(255,59,33,.85)';
-          ctx.shadowBlur = 11;
-        } else {
-          ctx.fillStyle = 'rgba(200,203,201,' + (0.22 + pulse * 0.2).toFixed(3) + ')';
-          ctx.shadowBlur = 0;
-        }
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.shadowBlur = 0;
-      }
-    }
-
-    var ro = window.ResizeObserver ? new ResizeObserver(resize) : null;
-    if (ro) ro.observe(canvas); else window.addEventListener('resize', resize);
-
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (en) {
-        visible = en[0].isIntersecting;
-      }, { threshold: 0 }).observe(canvas);
-    }
-
-    resize();
-    if (!reduced) raf = requestAnimationFrame(draw);
-    else { visible = true; draw(0); cancelAnimationFrame(raf); }
-  }
-
-  $$('canvas[data-network]').forEach(function (c) {
-    NetworkCanvas(c, {
-      density: parseInt(c.getAttribute('data-density') || '12000', 10),
-      max: parseInt(c.getAttribute('data-max') || '62', 10),
-      link: parseInt(c.getAttribute('data-link') || '138', 10)
-    });
-  });
 })();
