@@ -28,10 +28,14 @@ discusses matters that should not be on the public web.
 ## Local preview
 
 ```bash
-python3 -m http.server 4321 --directory ~/ABX-Intelligence/public
+python3 ~/ABX-Intelligence/serve.py
 ```
 
 Then open http://localhost:4321
+
+`serve.py` mirrors Cloudflare's routing, so `/solutions` serves
+`public/solutions.html` and unknown paths serve `public/404.html`. Plain
+`python3 -m http.server` will not resolve the extensionless links.
 
 ## Deploying
 
