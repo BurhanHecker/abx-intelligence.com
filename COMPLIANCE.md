@@ -167,3 +167,85 @@ Verify all decree numbers.
 4. Confirm the last-updated dates on the four legal pages.
 5. Have the legal pages reviewed by an Omani lawyer.
 6. Delete the `.pending-note` CSS rule from `assets/css/style.css` once all are gone.
+
+---
+
+# Appendix: choosing a company structure (researched 8 September 2026)
+
+Still not legal or tax advice. Sources are listed at the end of each point.
+Verify every figure before acting.
+
+## Context
+
+Both founders are expatriates resident in Oman, both under 18, operating a
+software business whose client and revenue are in Oman.
+
+## The two structures actually available
+
+| | SPC (One-Person Company) | LLC |
+|---|---|---|
+| Shareholders | Exactly one | Two to fifty |
+| Fits two co-founders | No | Yes |
+| Foreign ownership | Permitted, but only for selected activities | Permitted in most open sectors |
+| Minimum capital | None specified | None specified for most activities |
+| Liability | Limited to company capital | Limited to company capital |
+
+The Sole Proprietorship (المؤسسة الفردية) is **not available to you**.
+It is restricted to Omani and GCC nationals, regardless of visa type or
+years of residency.
+
+Because there are two of you, the **LLC** is the structure that fits. An SPC
+would mean one founder legally owns everything, with the other holding no
+recorded stake.
+
+## The cost nobody mentions up front
+
+Companies that are **100% foreign-owned** must employ at least one Omani
+national within one year of starting commercial activity, and register them
+with the Social Protection Fund. Non-compliance brings a 30-day grace
+period, extendable once.
+
+For a two-person business with little revenue, one salaried employee plus
+social contributions is the single largest ongoing cost of registering, and
+it is easy to miss when reading a setup-cost table.
+
+Sources disagree on the start date: Fragomen states 1 April 2024, another
+source says April 2026. **Confirm the current position and whether it
+applies at your size before committing.**
+
+Ask the lawyer specifically: does bringing in an Omani shareholder above
+some threshold remove this obligation, and what would that cost in equity?
+
+## Indicative government fees
+
+Registration roughly OMR 150 to 500; licence roughly OMR 250 to 3,000
+depending on activity. Notarisation, translation and any premises
+requirement are extra. Treat these as a starting range, not a quote.
+
+## Age
+
+Omani majority is 18. Neither founder can be expected to hold shares or sign
+binding contracts directly. The realistic route is a parent or guardian as
+registered owner or signatory until you reach majority, then transferring
+shares. Get the transfer mechanism agreed in writing at the outset, so
+ownership passing back to you later is not left to goodwill.
+
+## Do not incorporate abroad
+
+A company incorporated in the US, UK or Estonia but managed from Oman is
+likely still tax-resident in Oman, so it adds obligations rather than
+removing them, and it grants no visa or residency anywhere.
+
+A US LLC in particular is a trap at your scale: foreign-owned single-member
+LLCs must file IRS Form 5472 annually, and the penalty for failing to is
+USD 25,000 per year, plus a further USD 25,000 for each 90-day period the
+failure continues after notice.
+
+## Sources
+
+- Sole proprietorship restricted to Omani/GCC nationals: deel.com, omanbusinesssetup.com
+- LLC shareholder range and capital: commitbiz.com, omanverified.com
+- 100% foreign ownership: sovereigngroup.com, healyconsultants.com
+- Omanisation rule for foreign-owned companies: fragomen.com
+- Government fee ranges: omanverified.com, setupinoman.com
+- Form 5472 penalty: llcuniversity.com, greenbacktaxservices.com
