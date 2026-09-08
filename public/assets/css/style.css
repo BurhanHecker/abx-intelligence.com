@@ -702,12 +702,7 @@ h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;letter-spacing:-.03e
   padding:0 var(--gut) clamp(80px,10vw,140px);
   perspective:2200px;
 }
-.hero-stage::before{
-  content:"";position:absolute;left:50%;top:-6%;transform:translateX(-50%);
-  width:min(1100px,92vw);height:70%;pointer-events:none;
-  background:radial-gradient(ellipse at 50% 50%,rgba(255,59,33,.16),transparent 68%);
-  filter:blur(30px);
-}
+
 .stage-inner{position:relative;max-width:1160px;margin-inline:auto;}
 
 /* window ---------------------------------------------------------------- */
@@ -840,4 +835,37 @@ h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;letter-spacing:-.03e
 @media (max-width:860px){
   .brief{grid-template-columns:minmax(0,1fr);}
   .brief-copy,.brief-copy .lead{max-width:none;}
+}
+
+/* ---------- Hero headline: white lines fade toward the baseline,
+   the accent line stays solid brand red ---------- */
+.hero h1 .h-fade,
+.hero h1 .accent{display:block;}
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+  .hero h1 .h-fade{
+    background:linear-gradient(180deg,#FFFFFF 0%,#FBFAF9 42%,rgba(245,244,242,.58) 100%);
+    -webkit-background-clip:text;background-clip:text;
+    -webkit-text-fill-color:transparent;color:transparent;
+  }
+}
+
+/* ---------- Light source above the product, catching its top edge ---------- */
+.stage-inner{isolation:isolate;}
+.stage-inner::before{
+  content:"";position:absolute;z-index:0;pointer-events:none;
+  left:50%;transform:translateX(-50%);
+  top:-26%;width:88%;height:30%;
+  background:
+    radial-gradient(ellipse 48% 100% at 50% 100%,rgba(255,112,86,.62),rgba(255,59,33,.24) 44%,transparent 74%),
+    radial-gradient(ellipse 100% 100% at 50% 100%,rgba(255,59,33,.18),transparent 72%);
+  filter:blur(34px);
+}
+.stage-inner .app{position:relative;z-index:1;}
+/* the lit top edge itself */
+.stage-inner .app::before{
+  content:"";position:absolute;inset:0 0 auto;height:1px;z-index:3;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.35) 14%,rgba(255,178,160,.85) 50%,rgba(255,255,255,.35) 86%,transparent);
+}
+@media (max-width:700px){
+  .stage-inner::before{top:-18%;height:24%;width:94%;filter:blur(24px);}
 }
