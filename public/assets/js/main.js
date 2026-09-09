@@ -339,8 +339,8 @@
       var z1 = p.x * sy + p.z * cy;
       var y1 = p.y * cx - z1 * sx;
       var z2 = p.y * sx + z1 * cx;
-      var scale = Math.min(w, h) * 0.30;
-      var k = 2.6 / (2.6 + z2);
+      var scale = Math.min(w, h) * 0.26;
+      var k = 5 / (5 + z2);
       return { x: w / 2 + x1 * scale * k, y: h / 2 + y1 * scale * k, k: k, z: z2 };
     }
 
@@ -401,6 +401,80 @@
     resize();
     if (reduced) { draw(); cancelAnimationFrame(raf); }   /* one still frame */
     else raf = requestAnimationFrame(draw);
+  });
+
+  /* ------------------------------------------------------------------
+     Work strip
+     One panel open, the other two held at a strip. The first replays the
+     student portal: a pointer walks the widgets and one lifts under it.
+     ------------------------------------------------------------------ */
+  $$('[data-work]').forEach(function (work) {
+    var panels = $$('.work-panel', work);
+    var lines = $$('.work-line', work);
+
+    panels.forEach(function (panel, i) {
+      panel.addEventListener('click', function () {
+        if (panel.classList.contains('is-open')) return;
+        panels.forEach(function (p, n) { p.classList.toggle('is-open', n === i); });
+        lines.forEach(function (l, n) { l.classList.toggle('is-on', n === i); });
+      });
+    });
+
+    /* --- the replay ---------------------------------------------------- */
+    var mock = $('[data-portal-mock]', work);
+    if (!mock || reduced) return;
+    var cursor = $('[data-cursor]', mock);
+    var widgets = $$('.pm-w', mock);
+    if (!cursor || !widgets.length) return;
+
+    var at = 0, timers = [];
+    var clear = function () { timers.forEach(clearTimeout); timers = []; };
+    var wait = function (fn, ms) { timers.push(setTimeout(fn, ms)); };
+
+    function moveTo(x, y) {
+      cursor.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+    }
+
+    function beat() {
+      if (document.hidden || !mock.isConnected) return wait(beat, 1200);
+      /* the panel this lives in may be closed, in which case sit it out */
+      var host = mock.closest('.work-panel');
+      if (host && !host.classList.contains('is-open')) return wait(beat, 900);
+
+      var w = widgets[at % widgets.length];
+      var box = w.getBoundingClientRect();
+      var frame = mock.getBoundingClientRect();
+      if (!box.width) return wait(beat, 900);
+
+      cursor.style.opacity = '1';
+      moveTo(box.left - frame.left + box.width * 0.42,
+             box.top - frame.top + box.height * 0.4);
+
+      wait(function () {
+        cursor.classList.add('is-click');
+        w.classList.add('is-hot');
+        wait(function () { cursor.classList.remove('is-click'); }, 150);
+      }, 900);
+
+      wait(function () {
+        w.classList.remove('is-hot');
+        at++;
+        beat();
+      }, 2300);
+    }
+
+    /* only start once it has been seen, so the pointer is not part-way
+       through its walk by the time anyone scrolls to it */
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        if (!entries[0].isIntersecting) return;
+        io.disconnect();
+        wait(beat, 500);
+      }, { threshold: 0.3 });
+      io.observe(work);
+    } else wait(beat, 500);
+
+    window.addEventListener('pagehide', clear);
   });
 
 })();
