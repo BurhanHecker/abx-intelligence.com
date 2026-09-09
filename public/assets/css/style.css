@@ -22,7 +22,7 @@
   --font-display:"Instrument Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
   --font-body:"Newsreader",Georgia,"Times New Roman",serif;
 
-  --r-btn:4px;
+  --r-btn:7px;
   --r-sm:6px;
   --r:10px;
   --r-lg:14px;
@@ -917,3 +917,34 @@ h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;letter-spacing:-.03e
   .hero-next .container{flex-direction:column;}
   .hero-next .btn{width:100%;}
 }
+
+
+/* ---------- Navigation ----------
+   The links sit in one translucent capsule that floats over the page rather
+   than a bar ruled off from it. The blur is the whole effect, so it carries
+   the -webkit- prefix too; without it Safari falls back to flat translucency
+   and the group reads as a grey slab. */
+.nav-links{
+  padding:5px;border-radius:999px;
+  background:rgba(245,244,242,.045);
+  border:1px solid rgba(245,244,242,.075);
+  -webkit-backdrop-filter:blur(22px) saturate(170%);
+  backdrop-filter:blur(22px) saturate(170%);
+}
+.nav-links a{border-radius:999px;padding:8px 15px;}
+.nav-links a:hover{background:rgba(245,244,242,.07);}
+.nav-links a.is-active{background:rgba(245,244,242,.09);color:var(--light);}
+
+/* The call to action belongs to that floating group, so it takes the capsule
+   too. Buttons in the page body keep the 7px corner: same system, different
+   job, which is the distinction a single radius everywhere throws away. */
+.nav-cta .btn{border-radius:999px;padding:10px 19px;}
+
+/* the bar no longer needs a rule under it once the links carry their own edge */
+.nav.is-stuck{border-bottom-color:transparent;}
+
+/* the lead is one sentence now and the column is its measure; an extra cap
+   here only forced it back onto two lines */
+.hero .lead{max-width:none;}
+/* the trust line was centred for the old centred hero */
+.hero .trust{justify-content:flex-start;margin-inline:0;}
