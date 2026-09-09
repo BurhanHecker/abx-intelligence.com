@@ -286,4 +286,121 @@
     }, 2600);
   });
 
+  /* ------------------------------------------------------------------
+     Hero lattice
+     A structured grid of nodes rotating in three dimensions, projected
+     by hand. Drawn rather than embedded so it is served from our own
+     domain and costs no third-party script, which the CSP forbids.
+     ------------------------------------------------------------------ */
+  $$('canvas[data-lattice]').forEach(function (cv) {
+    var ctx = cv.getContext('2d');
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var w = 0, h = 0, raf = null, visible = true;
+    var yaw = 0.6, pitch = -0.35, targetYaw = 0.6, targetPitch = -0.35;
+
+    /* a 4x4x4 lattice, centred on the origin */
+    var N = 4, step = 1 / (N - 1), pts = [];
+    for (var ix = 0; ix < N; ix++)
+      for (var iy = 0; iy < N; iy++)
+        for (var iz = 0; iz < N; iz++)
+          pts.push({
+            x: (ix * step - 0.5) * 2,
+            y: (iy * step - 0.5) * 2,
+            z: (iz * step - 0.5) * 2,
+            i: ix, j: iy, k: iz,
+            /* a handful carry the accent, seeded so it never reshuffles */
+            hot: ((ix * 17 + iy * 31 + iz * 7) % 11) === 0
+          });
+
+    /* edges join immediate neighbours only, so the shape reads as a frame */
+    var edges = [];
+    pts.forEach(function (a, ai) {
+      pts.forEach(function (b, bi) {
+        if (bi <= ai) return;
+        var d = Math.abs(a.i - b.i) + Math.abs(a.j - b.j) + Math.abs(a.k - b.k);
+        if (d === 1) edges.push([ai, bi]);
+      });
+    });
+
+    function resize() {
+      var r = cv.getBoundingClientRect();
+      w = r.width; h = r.height;
+      if (!w || !h) return;
+      cv.width = Math.round(w * dpr);
+      cv.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    /* rotate, then divide by depth so nearer nodes sit wider apart */
+    function project(p) {
+      var cy = Math.cos(yaw), sy = Math.sin(yaw);
+      var cx = Math.cos(pitch), sx = Math.sin(pitch);
+      var x1 = p.x * cy - p.z * sy;
+      var z1 = p.x * sy + p.z * cy;
+      var y1 = p.y * cx - z1 * sx;
+      var z2 = p.y * sx + z1 * cx;
+      var scale = Math.min(w, h) * 0.30;
+      var k = 2.6 / (2.6 + z2);
+      return { x: w / 2 + x1 * scale * k, y: h / 2 + y1 * scale * k, k: k, z: z2 };
+    }
+
+    function draw() {
+      raf = requestAnimationFrame(draw);
+      if (!visible || !w || document.hidden) return;
+
+      yaw += (targetYaw - yaw) * 0.05 + 0.0022;
+      pitch += (targetPitch - pitch) * 0.05;
+
+      ctx.clearRect(0, 0, w, h);
+      var flat = pts.map(project);
+
+      edges.forEach(function (e) {
+        var a = flat[e[0]], b = flat[e[1]];
+        var depth = (a.k + b.k) / 2;
+        var hot = pts[e[0]].hot || pts[e[1]].hot;
+        ctx.strokeStyle = hot
+          ? 'rgba(255,59,33,' + (0.30 * depth).toFixed(3) + ')'
+          : 'rgba(245,244,242,' + (0.14 * depth).toFixed(3) + ')';
+        ctx.lineWidth = 0.9 * depth;
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+      });
+
+      /* far nodes first so near ones sit on top */
+      pts.map(function (p, i) { return { p: p, f: flat[i] }; })
+         .sort(function (m, n) { return n.f.z - m.f.z; })
+         .forEach(function (o) {
+           var r = (o.p.hot ? 3.1 : 1.9) * o.f.k;
+           if (o.p.hot) {
+             ctx.fillStyle = 'rgba(255,59,33,' + (0.95 * o.f.k).toFixed(3) + ')';
+             ctx.shadowColor = 'rgba(255,59,33,.8)'; ctx.shadowBlur = 12 * o.f.k;
+           } else {
+             ctx.fillStyle = 'rgba(220,222,220,' + (0.42 * o.f.k).toFixed(3) + ')';
+             ctx.shadowBlur = 0;
+           }
+           ctx.beginPath(); ctx.arc(o.f.x, o.f.y, r, 0, Math.PI * 2); ctx.fill();
+           ctx.shadowBlur = 0;
+         });
+    }
+
+    if (fine && !reduced) {
+      window.addEventListener('pointermove', function (e) {
+        var r = cv.getBoundingClientRect();
+        targetYaw = 0.6 + ((e.clientX - r.left) / r.width - 0.5) * 1.1;
+        targetPitch = -0.35 + ((e.clientY - r.top) / r.height - 0.5) * 0.7;
+      }, { passive: true });
+    }
+
+    if (window.ResizeObserver) new ResizeObserver(resize).observe(cv);
+    else window.addEventListener('resize', resize);
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (en) { visible = en[0].isIntersecting; },
+        { threshold: 0 }).observe(cv);
+    }
+
+    resize();
+    if (reduced) { draw(); cancelAnimationFrame(raf); }   /* one still frame */
+    else raf = requestAnimationFrame(draw);
+  });
+
 })();

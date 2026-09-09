@@ -691,8 +691,23 @@ h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;letter-spacing:-.03e
 /* ==========================================================================
    Product stage: the software interface treated as the product shot
    ========================================================================== */
-.hero{text-align:center;padding-bottom:0;}
-.hero .hero-copy{max-width:940px;margin-inline:auto;}
+.hero{text-align:left;padding-bottom:0;}
+.hero .hero-copy{max-width:none;margin-inline:0;}
+.hero-grid{
+  display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
+  gap:clamp(28px,4vw,64px);align-items:center;
+}
+.hero-object{position:relative;aspect-ratio:1/1;min-height:320px;}
+/* the display size was set for a full-width hero; in two columns it has to
+   come down or "Custom software" breaks across lines */
+.hero .h-xl{font-size:clamp(2.4rem,4.3vw,4.2rem);}
+.hero-object canvas{position:absolute;inset:0;width:100%;height:100%;}
+@media (max-width:960px){
+  .hero{text-align:center;}
+  .hero .hero-copy{margin-inline:auto;max-width:700px;}
+  .hero-grid{grid-template-columns:minmax(0,1fr);}
+  .hero-object{order:-1;min-height:260px;aspect-ratio:4/3;}
+}
 .hero .lead{max-width:660px;margin-inline:auto;}
 .hero .btn-row{justify-content:center;margin-top:40px;}
 .hero .trust{justify-content:center;margin-inline:auto;border-top:0;padding-top:0;margin-top:28px;}
