@@ -264,4 +264,26 @@
      ------------------------------------------------------------------ */
   $$('[data-year]').forEach(function (el) { el.textContent = new Date().getFullYear(); });
 
+  /* ------------------------------------------------------------------
+     Rotating headline
+     Cycles the accent line. Holds still for reduced motion, and pauses
+     while the tab is hidden so it never animates to nobody.
+     ------------------------------------------------------------------ */
+  $$('[data-rotate]').forEach(function (host) {
+    var words = $$('.rot-word', host);
+    if (words.length < 2 || reduced) return;
+    var at = 0;
+    setInterval(function () {
+      if (document.hidden) return;
+      var cur = words[at];
+      at = (at + 1) % words.length;
+      var next = words[at];
+      cur.classList.remove('is-in');
+      cur.classList.add('is-out');
+      next.classList.remove('is-out');
+      next.classList.add('is-in');
+      setTimeout(function () { cur.classList.remove('is-out'); }, 640);
+    }, 2600);
+  });
+
 })();

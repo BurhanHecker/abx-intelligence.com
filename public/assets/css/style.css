@@ -869,3 +869,24 @@ h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;letter-spacing:-.03e
 @media (max-width:700px){
   .stage-inner::before{top:-18%;height:24%;width:94%;filter:blur(24px);}
 }
+
+
+/* ---------- Rotating headline ----------
+   The words stack absolutely over an invisible copy of the longest line, so
+   the block never changes height and nothing below it shifts as words swap. */
+.rotator{position:relative;display:block;}
+.rot-measure{visibility:hidden;display:block;pointer-events:none;}
+.rot-word{
+  position:absolute;inset:0;display:block;
+  opacity:0;transform:translateY(0.42em);
+  transition:opacity .34s var(--ease),transform .34s var(--ease);
+}
+/* the incoming line waits for the outgoing one to clear — crossfading two
+   lines of large display type at once just reads as a smudge */
+.rot-word.is-in{opacity:1;transform:translateY(0);transition-delay:.28s;}
+.rot-word.is-out{opacity:0;transform:translateY(-0.42em);}
+@media (prefers-reduced-motion:reduce){
+  /* no cycling under reduced motion — the first line simply stands */
+  .rot-word{transition:none;}
+  .rot-word:not(.is-in){display:none;}
+}
