@@ -389,6 +389,34 @@
         targetYaw = 0.6 + ((e.clientX - r.left) / r.width - 0.5) * 1.1;
         targetPitch = -0.35 + ((e.clientY - r.top) / r.height - 0.5) * 0.7;
       }, { passive: true });
+    } else if (!reduced) {
+      /* No pointer on a touch screen, so the object would just sit there.
+         Scrolling turns it instead: its position in the viewport drives the
+         rotation, which gives it life without asking for anything. */
+      var byScroll = function () {
+        var r = cv.getBoundingClientRect();
+        var p = (r.top + r.height / 2 - window.innerHeight / 2) / window.innerHeight;
+        targetYaw = 0.6 + p * 1.5;
+        targetPitch = -0.35 - p * 0.4;
+      };
+      window.addEventListener('scroll', byScroll, { passive: true });
+      byScroll();
+
+      /* and a finger can spin it directly. Horizontal drags rotate, vertical
+         ones are left alone so the page still scrolls under the thumb. */
+      var sx = 0, sy = 0, spinning = false, baseYaw = 0;
+      cv.addEventListener('touchstart', function (e) {
+        var t = e.touches[0];
+        sx = t.clientX; sy = t.clientY; spinning = false; baseYaw = targetYaw;
+      }, { passive: true });
+      cv.addEventListener('touchmove', function (e) {
+        var t = e.touches[0];
+        var dx = t.clientX - sx, dy = t.clientY - sy;
+        if (!spinning && Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(dy)) spinning = true;
+        if (!spinning) return;
+        e.preventDefault();
+        targetYaw = baseYaw + dx / cv.clientWidth * 2.6;
+      }, { passive: false });
     }
 
     if (window.ResizeObserver) new ResizeObserver(resize).observe(cv);
@@ -402,5 +430,37 @@
     if (reduced) { draw(); cancelAnimationFrame(raf); }   /* one still frame */
     else raf = requestAnimationFrame(draw);
   });
+
+  /* ------------------------------------------------------------------
+     Small screens: scale the console rather than reflow it
+     ------------------------------------------------------------------ */
+  (function fitStage() {
+    var inner = $('.stage-inner');
+    var stage = $('.hero-stage');
+    if (!inner || !stage) return;
+
+    function fit() {
+      if (window.innerWidth > 760) {
+        inner.style.transform = '';
+        stage.style.height = '';
+        return;
+      }
+      /* .hero-stage carries the gutter padding, so its clientWidth is wider
+         than the space the mock actually has. Measure the content box or the
+         scaled mock overhangs the right edge by exactly that padding. */
+      var pad = getComputedStyle(stage);
+      var room = stage.clientWidth
+               - parseFloat(pad.paddingLeft) - parseFloat(pad.paddingRight);
+      var k = room / 1040;
+      inner.style.transform = 'scale(' + k.toFixed(4) + ')';
+      /* transform leaves layout untouched, so claim the scaled height back */
+      stage.style.height = Math.round(inner.offsetHeight * k) + 'px';
+    }
+
+    fit();
+    window.addEventListener('resize', fit);
+    window.addEventListener('orientationchange', fit);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+  })();
 
 })();

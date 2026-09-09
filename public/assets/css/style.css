@@ -948,3 +948,23 @@ h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;letter-spacing:-.03e
 .hero .lead{max-width:none;}
 /* the trust line was centred for the old centred hero */
 .hero .trust{justify-content:flex-start;margin-inline:0;}
+
+/* ==========================================================================
+   Small screens
+   ========================================================================== */
+
+/* A console is a desktop shape. Reflowed onto a phone it collapsed into one
+   endless column of stacked cards and stopped reading as a product at all.
+   Keep the real layout and shrink the whole thing instead, so it reads as
+   what it is: a desktop screen, seen small. JS sets the scale from the
+   measured width and gives the wrapper the height the scaled mock actually
+   occupies -- transform does not affect layout, so without that the space
+   below it would be wrong. */
+@media (max-width:760px){
+  .app-body{grid-template-columns:190px minmax(0,1fr);min-height:420px;}
+  .app-rail{display:flex;}
+  .app-kpis{grid-template-columns:repeat(3,1fr);}
+  .app-chart{min-height:120px;}
+  .hero-stage{overflow:hidden;}
+  .stage-inner{width:1040px;transform-origin:top left;will-change:transform;}
+}
