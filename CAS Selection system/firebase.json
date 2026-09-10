@@ -1,0 +1,11 @@
+{
+  "comment": "Emulator config for running tests/rules.test.mjs locally. When integrating, the portal has its own firebase.json — merge the firestore.rules reference into it rather than copying this file.",
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "emulators": {
+    "firestore": { "port": 8181 },
+    "ui": { "enabled": false }
+  }
+}

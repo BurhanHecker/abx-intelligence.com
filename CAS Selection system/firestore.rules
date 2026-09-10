@@ -1,0 +1,198 @@
+rules_version = '2';
+
+// =====================================================================
+// CAS Excursion Week — Firestore security rules
+// ---------------------------------------------------------------------
+// MERGE THESE INTO THE PORTAL'S EXISTING rules FILE. A project has exactly
+// one ruleset; deploying this file on its own would delete the portal's
+// rules. Copy the `match /casX/{...}` blocks (and the helpers, if the portal
+// has no equivalents) into the portal's `match /databases/.../documents` block.
+//
+// These rules are the real enforcement. The client transaction in
+// src/cas/lib/actions.js is a convenience — a student who opens the browser
+// console still cannot exceed a trip's capacity, join while registration is
+// closed, edit a trip, read another student's choice, or forge activity.
+//
+// Two conventions worth keeping if you edit these:
+//
+//   1. Every field access goes through `.get(key, default)`. Reading a
+//      property that does not exist is an *error* in the rules language, not
+//      `false`, and an erroring clause can deny a request that should have
+//      been allowed.
+//
+//   2. The student branch is written BEFORE `isAdmin()` in every `allow` that
+//      has both. `isAdmin()` ends in an `exists()` lookup, which is a billed
+//      document read; short-circuiting on the student branch means the common
+//      case — a student joining a trip — never pays for it.
+//
+// Verified against the Firestore emulator by tests/rules.test.mjs.
+// =====================================================================
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ---------------------------------------------------------------
+    // Helpers
+    // ---------------------------------------------------------------
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function email() {
+      return request.auth.token.get('email', '');
+    }
+
+    // Restrict to school accounts. Change or delete if the portal already
+    // gates sign-in to the domain at the Auth layer.
+    //
+    // FIRST THING TO CHECK if students hit "Missing or insufficient
+    // permissions": `email_verified` is true for Google sign-in but not for
+    // every provider. Drop that line if students sign in another way.
+    function isSchoolAccount() {
+      return signedIn()
+        && request.auth.token.get('email_verified', false) == true
+        && email().matches('^[^@]+@abaoman[.]org$');
+    }
+
+    function isStudent() {
+      return isSchoolAccount();
+    }
+
+    // REPLACE with the portal's own staff test if it has one, and keep it in
+    // step with resolveIsAdmin() in src/cas/lib/CasProvider.jsx. The two must
+    // agree, or the UI and the database will disagree about who can do what.
+    function isAdmin() {
+      return signedIn() && (
+        request.auth.token.get('admin', false) == true
+        || request.auth.token.get('staff', false) == true
+        || exists(/databases/$(database)/documents/casAdmins/$(request.auth.uid))
+      );
+    }
+
+    function settings() {
+      return get(/databases/$(database)/documents/casSettings/config).data;
+    }
+
+    // A missing settings document means "open", matching useCasSettings().
+    function registrationOpen() {
+      return !exists(/databases/$(database)/documents/casSettings/config)
+        || (settings().get('openToStudents', true) != false
+            && settings().get('registrationOpen', true) != false);
+    }
+
+    function changedKeys() {
+      return request.resource.data.diff(resource.data).affectedKeys();
+    }
+
+    // ---------------------------------------------------------------
+    // casSettings/config — the two availability switches
+    // ---------------------------------------------------------------
+
+    match /casSettings/{docId} {
+      allow read: if signedIn();
+      allow write: if isAdmin();
+    }
+
+    // ---------------------------------------------------------------
+    // casTrips — admins own the content. A student may only move the
+    // enrolment counter by exactly one, and never past the cap.
+    // ---------------------------------------------------------------
+
+    match /casTrips/{tripId} {
+      allow read: if signedIn();
+      allow create, delete: if isAdmin();
+
+      allow update: if isCounterNudge() || isAdmin();
+
+      // A student may move `enrolledCount` by exactly one and touch nothing
+      // else — which is what stops them renaming a trip or raising its cap on
+      // the way past, and what stops the last seat being handed out twice.
+      function isCounterNudge() {
+        return isStudent()
+          && registrationOpen()
+          && changedKeys().hasOnly(['enrolledCount'])
+          && request.resource.data.enrolledCount is int
+          && request.resource.data.enrolledCount >= 0
+          && (
+            // Taking a place: +1, and only if a place exists.
+            (
+              request.resource.data.enrolledCount
+                == resource.data.get('enrolledCount', 0) + 1
+              && (
+                resource.data.get('maxStudents', 0) == 0
+                || request.resource.data.enrolledCount
+                     <= resource.data.get('maxStudents', 0)
+              )
+            )
+            // Releasing a place: -1.
+            || request.resource.data.enrolledCount
+                 == resource.data.get('enrolledCount', 0) - 1
+          );
+      }
+    }
+
+    // ---------------------------------------------------------------
+    // casSelections/{uid} — one document per student, id == their uid,
+    // which is what makes "one excursion per student" structural.
+    // ---------------------------------------------------------------
+
+    match /casSelections/{uid} {
+      // A student reads only their own row. Admins read everyone's — needed
+      // by the admin table, the live board and the CSV export.
+      allow read: if isAdmin() || (signedIn() && request.auth.uid == uid);
+
+      allow create, update: if isOwnSelection() || isAdmin();
+      allow delete: if isAdmin();
+
+      function isOwnSelection() {
+        return isStudent()
+          && request.auth.uid == uid
+          && registrationOpen()
+          && request.resource.data.get('uid', '') == uid
+          // Stops a student writing someone else's address into their own
+          // row, which would corrupt the CSV export.
+          && request.resource.data.get('email', '') == email()
+          && (
+            request.resource.data.get('tripId', null) == null
+            || request.resource.data.get('tripId', null) is string
+          );
+      }
+    }
+
+    // ---------------------------------------------------------------
+    // casActivity — append-only feed behind the live board
+    // ---------------------------------------------------------------
+
+    match /casActivity/{entryId} {
+      // Students never read the feed; it names other students.
+      allow read: if isAdmin();
+
+      allow create: if isOwnEntry() || isAdmin();
+
+      // Append-only: nobody rewrites history; only an admin can clear it.
+      allow update: if false;
+      allow delete: if isAdmin();
+
+      function isOwnEntry() {
+        return isStudent()
+          && registrationOpen()
+          && request.resource.data.get('uid', '') == request.auth.uid
+          && request.resource.data.get('type', '') in ['join', 'leave', 'switch'];
+      }
+    }
+
+    // ---------------------------------------------------------------
+    // casAdmins/{uid} — fallback admin list for before custom claims are set
+    // up. A document's presence is what counts; its contents are ignored.
+    // Add and remove these by hand in the Firebase console.
+    // ---------------------------------------------------------------
+
+    match /casAdmins/{uid} {
+      // Readable by the owner so CasProvider can check itself, and by admins
+      // so the list can be reviewed. Never writable from the client.
+      allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
+      allow write: if false;
+    }
+  }
+}

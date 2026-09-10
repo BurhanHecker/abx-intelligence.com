@@ -1,0 +1,33 @@
+{
+  "name": "cas-excursion-selection",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "CAS Excursion Week selection module for the ABA student portal \u2014 student view, admin view and live board.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "seed": "node scripts/seed.mjs",
+    "test": "npm run test:unit",
+    "test:unit": "esbuild tests/units.test.mjs --bundle --platform=node --format=esm --outfile=node_modules/.cas-units.mjs --log-level=error && node node_modules/.cas-units.mjs",
+    "test:rules": "node tests/rules.test.mjs",
+    "emulator": "firebase emulators:start --only firestore --project cas-test",
+    "test:actions": "esbuild tests/actions.test.mjs --bundle --platform=node --format=esm --packages=external --outfile=node_modules/.cas-actions.mjs --log-level=error && node node_modules/.cas-actions.mjs"
+  },
+  "dependencies": {
+    "firebase": "^10.12.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "vite": "^5.3.1",
+    "@firebase/rules-unit-testing": "^3.0.4",
+    "esbuild": "^0.21.5",
+    "firebase-tools": "^13.15.0"
+  },
+  "optionalDependencies": {
+    "firebase-admin": "^12.1.1"
+  }
+}

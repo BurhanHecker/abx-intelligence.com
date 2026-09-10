@@ -1,0 +1,5 @@
+{
+  "comment": "The CAS module needs no composite indexes. Trips are sorted in JS; the activity feed uses a single-field orderBy on `at`, and the delete-trip cleanup uses a single-field equality on `tripId` — both of which Firestore indexes automatically. Merge the arrays below into the portal's own firestore.indexes.json rather than deploying this file on its own.",
+  "indexes": [],
+  "fieldOverrides": []
+}
