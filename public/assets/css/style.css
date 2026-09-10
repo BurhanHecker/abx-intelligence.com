@@ -1111,13 +1111,33 @@ h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;letter-spacing:-.03e
 .pm-club i{font-style:normal;font-size:.58rem;color:var(--s-faint);margin-top:3px;
   text-transform:uppercase;letter-spacing:.06em;}
 .pm-club p{margin:7px 0 0;font-size:.62rem;color:var(--s-dim);line-height:1.45;}
-.pm-track{height:5px;border-radius:3px;background:rgba(233,238,245,.08);margin:auto 0 6px;overflow:hidden;}
-.pm-track span{display:block;height:100%;background:var(--s-accent);border-radius:3px;}
+/* One segment per place in the club, so the count can be read off the card
+   instead of estimated from a length. They light in sequence when the panel
+   opens -- the seats filling up, which is what the number means. */
+.pm-track{display:flex;gap:2px;height:6px;margin:auto 0 7px;}
+.pm-track i{
+  flex:1;min-width:0;border-radius:1.5px;
+  background:rgba(245,244,242,.07);
+  transition:background .34s var(--ease), box-shadow .34s var(--ease);
+}
+.work-panel.is-open .pm-track i.on{
+  background:var(--s-accent);
+  transition-delay:calc(var(--i) * 42ms);
+}
+/* the leading seat carries a little light, so the eye lands on where the
+   club has got to rather than on the whole run */
+.work-panel.is-open .pm-track i.on:last-of-type,
+.work-panel.is-open .pm-track i.on + i:not(.on){box-shadow:none;}
+.work-panel.is-open .pm-track i.on:has(+ i:not(.on)){
+  box-shadow:0 0 7px var(--s-accent);
+}
 .pm-count{font-size:.6rem;color:var(--s-dim);font-weight:600;}
-.pm-club.is-full .pm-track span{background:#FB923C;}
+.work-panel.is-open .pm-club.is-full .pm-track i.on{background:#FB923C;}
+.work-panel.is-open .pm-club.is-full .pm-track i.on:has(+ i:not(.on)){box-shadow:0 0 7px #FB923C;}
 .pm-club.is-full .pm-count{color:#FB923C;}
 .pm-club.is-mine{border-color:#E8B008;background:rgba(232,176,8,.10);}
-.pm-club.is-mine .pm-track span{background:#E8B008;}
+.work-panel.is-open .pm-club.is-mine .pm-track i.on{background:#E8B008;}
+.work-panel.is-open .pm-club.is-mine .pm-track i.on:has(+ i:not(.on)){box-shadow:0 0 7px #E8B008;}
 .pm-club.is-mine .pm-count{color:#E8B008;}
 /* ---------- assisted grading mock ---------- */
 .pm--grade .pm-logo{background:#4FD1A5;color:#0E1116;}
