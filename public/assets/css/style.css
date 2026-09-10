@@ -1031,14 +1031,18 @@ h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;letter-spacing:-.03e
 
 /* ---------- the portal mock ---------- */
 .pm{
-  /* the screen inside the panel, on its own dark palette. Kept a shade
-     lighter than the page so the mock still reads as a screen sitting on a
-     surface rather than a hole cut in it. */
-  --s-bg:#101318; --s-chrome:#151A21; --s-card:#171C24;
-  --s-line:rgba(233,238,245,.10); --s-line-2:rgba(233,238,245,.06);
-  --s-ink:#E8ECF2; --s-dim:#98A1AE; --s-faint:#6C7684;
-  --s-block:rgba(233,238,245,.09); --s-accent:#6E9BFF;
-  background:var(--s-bg);border-radius:10px;overflow:hidden;
+  /* The screen inside the panel. Two things matter more than the exact
+     values. It is warmed to sit in the same family as the page -- the first
+     pass was blue-black against a warm ground, which read as a foreign
+     object dropped on top. And it is lit from above rather than filled
+     flat, so it reads as a surface catching light instead of a hole. */
+  --s-bg:#16171A; --s-bg-top:#1D1F23; --s-chrome:#1B1D21; --s-card:#202225;
+  --s-line:rgba(245,244,242,.09); --s-line-2:rgba(245,244,242,.05);
+  --s-lift:rgba(255,255,255,.055);            /* the top edge of a raised thing */
+  --s-ink:#EFEEEC; --s-dim:#9B9C9A; --s-faint:#74767A;
+  --s-block:rgba(245,244,242,.08); --s-accent:#7DA2FF;
+  background:linear-gradient(176deg,var(--s-bg-top) 0%,var(--s-bg) 58%);
+  border-radius:10px;overflow:hidden;
   font-family:var(--font-display);color:var(--s-ink);
   display:flex;flex-direction:column;
   /* the panel is a <button>, which centres its text. Interfaces are
@@ -1170,4 +1174,30 @@ h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;letter-spacing:-.03e
 .pm-mark.is-hot,.pm-fb.is-hot{border-color:#4FD1A5;}
 @media (prefers-reduced-motion:reduce){
   .pm-club,.pm-ans,.pm-mark,.pm-fb{transition:none;}
+}
+
+
+/* ---------- depth ----------
+   A dark interface reads as layered the same way a lit one does: the top
+   edge of anything raised catches light, and it drops a shadow. Without
+   those two the cards were tinted rectangles and the whole mock looked
+   like a wireframe of itself. */
+.pm-memo,.pm-w,.pm-club,.pm-ans,.pm-mark,.pm-fb{
+  box-shadow:inset 0 1px 0 var(--s-lift), 0 1px 2px rgba(0,0,0,.4);
+}
+.pm-bar{box-shadow:inset 0 1px 0 rgba(255,255,255,.045), 0 1px 0 rgba(0,0,0,.35);}
+
+/* the panel itself sits on the page rather than being cut out of it: a rim
+   that picks up the ground's warmth, and a shadow under it */
+.work-panel{
+  box-shadow:0 22px 50px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.035);
+}
+.work-panel.is-open{border-color:rgba(255,255,255,.13);}
+
+/* and a breath of the page's own warmth inside the frame, so the join is a
+   gradient rather than an edge */
+.work-art::after{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:1;
+  background:radial-gradient(120% 80% at 50% 108%,
+             rgba(255,59,33,.10) 0%, rgba(255,59,33,0) 62%);
 }
