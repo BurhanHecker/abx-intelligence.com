@@ -907,10 +907,15 @@ h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;letter-spacing:-.03e
 /* The two calls to action sit beside the carousel rather than under it.
    Stacked in a narrow column they cost no vertical space of their own, and
    the strip gets the rest of the row. */
-.stage-row{display:flex;align-items:center;gap:clamp(16px,2.2vw,30px);}
-.stage-cta{display:flex;flex-direction:column;gap:10px;flex:none;width:clamp(150px,15vw,200px);}
+/* The row is allowed wider than the carousel so the buttons can sit in the
+   space beside it rather than taking width off it. Without a cap of its own
+   it ran the whole viewport, which pinned the buttons to the screen edge and
+   left a few hundred pixels of nothing on the right. */
+.stage-row{display:flex;align-items:center;gap:clamp(16px,2.2vw,30px);
+  max-width:1440px;margin-inline:auto;}
+.stage-cta{display:flex;flex-direction:column;gap:10px;flex:none;width:clamp(150px,13vw,190px);}
 .stage-cta .btn{width:100%;justify-content:center;}
-.stage-row .stage-inner{flex:1;min-width:0;margin-inline:0;}
+.stage-row .stage-inner{flex:1;min-width:0;margin-inline:auto;}
 @media (max-width:860px){
   /* below this the column is too narrow to read, so it goes back underneath */
   .stage-row{flex-direction:column;align-items:stretch;}
