@@ -287,35 +287,87 @@
   });
 
   /* ------------------------------------------------------------------
-     Small screens: scale the console rather than reflow it
+     Work strip
+     One panel open, the other two held at an edge. It turns on its own;
+     clicking a panel opens it and restarts the timer. No pause on hover:
+     this fills most of the hero, so a cursor resting anywhere over it
+     would stop the rotation for as long as it sat there.
      ------------------------------------------------------------------ */
-  (function fitStage() {
-    var inner = $('.stage-inner');
-    var stage = $('.hero-stage');
-    if (!inner || !stage) return;
+  $$('[data-work]').forEach(function (work) {
+    var panels = $$('.work-panel', work);
+    if (panels.length < 2) return;
 
-    function fit() {
-      if (window.innerWidth > 760) {
-        inner.style.transform = '';
-        stage.style.height = '';
-        return;
-      }
-      /* .hero-stage carries the gutter padding, so its clientWidth is wider
-         than the space the mock actually has. Measure the content box or the
-         scaled mock overhangs the right edge by exactly that padding. */
-      var pad = getComputedStyle(stage);
-      var room = stage.clientWidth
-               - parseFloat(pad.paddingLeft) - parseFloat(pad.paddingRight);
-      var k = room / 1040;
-      inner.style.transform = 'scale(' + k.toFixed(4) + ')';
-      /* transform leaves layout untouched, so claim the scaled height back */
-      stage.style.height = Math.round(inner.offsetHeight * k) + 'px';
+    var at = 0, hold = null;
+    var HOLD = 5200;
+
+    function open(n) {
+      at = (n + panels.length) % panels.length;
+      panels.forEach(function (p, i) { p.classList.toggle('is-open', i === at); });
     }
 
-    fit();
-    window.addEventListener('resize', fit);
-    window.addEventListener('orientationchange', fit);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
-  })();
+    function tick() {
+      clearTimeout(hold);
+      hold = setTimeout(function () {
+        if (!document.hidden) open(at + 1);
+        tick();
+      }, HOLD);
+    }
+
+    panels.forEach(function (panel, i) {
+      panel.addEventListener('click', function () { open(i); tick(); });
+    });
+
+    if (!reduced) tick();
+
+    /* --- the portal replays itself while its panel is the open one ----- */
+    var mock = $('[data-portal-mock]', work);
+    if (!mock || reduced) return;
+    var cursor = $('[data-cursor]', mock);
+    var widgets = $$('.pm-w', mock);
+    if (!cursor || !widgets.length) return;
+
+    var w = 0, timers = [];
+    var wait = function (fn, ms) { timers.push(setTimeout(fn, ms)); };
+
+    function beat() {
+      var host = mock.closest('.work-panel');
+      if (document.hidden || (host && !host.classList.contains('is-open'))) {
+        cursor.style.opacity = '0';
+        return wait(beat, 900);
+      }
+      var target = widgets[w % widgets.length];
+      var box = target.getBoundingClientRect();
+      var frame = mock.getBoundingClientRect();
+      if (!box.width) return wait(beat, 900);
+
+      cursor.style.opacity = '1';
+      cursor.style.transform = 'translate(' +
+        (box.left - frame.left + box.width * 0.44) + 'px,' +
+        (box.top - frame.top + box.height * 0.42) + 'px)';
+
+      wait(function () {
+        cursor.classList.add('is-click');
+        target.classList.add('is-hot');
+        wait(function () { cursor.classList.remove('is-click'); }, 150);
+      }, 880);
+
+      wait(function () {
+        target.classList.remove('is-hot');
+        w++;
+        beat();
+      }, 2100);
+    }
+
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (e) {
+        if (!e[0].isIntersecting) return;
+        io.disconnect();
+        wait(beat, 600);
+      }, { threshold: 0.25 });
+      io.observe(work);
+    } else wait(beat, 600);
+
+    window.addEventListener('pagehide', function () { timers.forEach(clearTimeout); });
+  });
 
 })();

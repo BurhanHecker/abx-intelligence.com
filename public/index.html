@@ -18,8 +18,8 @@
 <link rel="icon" href="/assets/img/favicon-512.png" type="image/png" sizes="512x512">
 <link rel="apple-touch-icon" href="/assets/img/favicon-180.png">
 <link rel="preload" href="/assets/fonts/instrument-sans-600.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/css/fonts.css?v=202609092130">
-<link rel="stylesheet" href="/assets/css/style.css?v=202609092130">
+<link rel="stylesheet" href="/assets/css/fonts.css?v=202609101025">
+<link rel="stylesheet" href="/assets/css/style.css?v=202609101025">
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
@@ -90,57 +90,91 @@
 
   <div class="hero-stage" data-reveal data-delay="0.18">
     <div class="stage-inner">
-      <div class="app" aria-hidden="true">
-        <div class="app-chrome">
-          <span class="app-dot"></span><span class="app-dot"></span><span class="app-dot"></span>
-          <span class="app-url">abx / operations console</span>
-        </div>
-        <div class="app-body">
-          <aside class="app-rail">
-            <span class="app-brand">ABX</span>
-            <span class="app-nav is-on"><i></i>Overview</span>
-            <span class="app-nav"><i></i>Workflows</span>
-            <span class="app-nav"><i></i>Directory</span>
-            <span class="app-nav"><i></i>Approvals</span>
-            <span class="app-nav"><i></i>Reporting</span>
-            <span class="app-nav"><i></i>Settings</span>
-            <span class="app-rail-foot"><i></i>Operational</span>
-          </aside>
-          <div class="app-main">
-            <div class="app-head">
-              <div>
-                <span class="app-eyebrow">Overview</span>
-                <h3 class="app-h">This week</h3>
+      <div class="work" data-work>
+        <div class="work-strip">
+
+          <button class="work-panel is-open" type="button" data-panel="0" aria-label="Student portal">
+            <div class="work-art">
+              <div class="pm" data-portal-mock>
+                <div class="pm-bar">
+                  <span class="pm-logo">S</span>
+                  <span class="pm-title">Student Portal</span>
+                  <span class="pm-who">student@school.example</span>
+                </div>
+                <div class="pm-body">
+                  <div class="pm-memo">
+                    <span class="pm-kicker">Today &middot; Day 4</span>
+                    <b>Library hours extended this term</b>
+                    <p>Open until six on weekdays. Study rooms can be booked from the portal.</p>
+                    <span class="pm-dots"><i class="on"></i><i></i><i></i></span>
+                  </div>
+                  <div class="pm-widgets">
+                    <div class="pm-w" data-w="0">
+                      <b>Photo Gallery</b><span>Moments from around school</span>
+                      <div class="pm-strip"><i></i><i></i><i></i><i></i></div>
+                    </div>
+                    <div class="pm-w" data-w="1">
+                      <b>Academic Guide</b><span>Skills &amp; quick links</span>
+                      <div class="pm-mini"><i></i><i></i><i></i><i></i><i></i></div>
+                    </div>
+                    <div class="pm-w" data-w="2">
+                      <b>Assessment Calendar</b><span>What is due, and when</span>
+                      <div class="pm-rows"><i></i><i></i><i></i></div>
+                    </div>
+                  </div>
+                </div>
+                <span class="pm-cursor" data-cursor aria-hidden="true"></span>
               </div>
-              <span class="app-chip">Live</span>
             </div>
-            <div class="app-kpis">
-              <div class="kpi"><small>Requests routed</small><b>Automatically</b><span class="kpi-bar"><i style="width:78%"></i></span></div>
-              <div class="kpi is-red"><small>Manual re-entry</small><b>Removed</b><span class="kpi-bar"><i style="width:96%"></i></span></div>
-              <div class="kpi"><small>Systems connected</small><b>In sync</b><span class="kpi-bar"><i style="width:64%"></i></span></div>
-            </div>
-            <div class="app-split">
-              <div class="app-panel">
-                <span class="app-panel-h">Throughput</span>
-                <div class="app-chart">
-                  <i style="height:34%"></i><i style="height:52%"></i><i style="height:41%"></i>
-                  <i style="height:68%"></i><i style="height:57%"></i><i class="is-red" style="height:92%"></i>
-                  <i style="height:71%"></i><i style="height:80%"></i><i style="height:63%"></i>
-                  <i style="height:74%"></i><i style="height:58%"></i><i style="height:86%"></i>
+            <span class="work-tag">Student portal</span>
+          </button>
+
+          <button class="work-panel" type="button" data-panel="1" aria-label="Club selection">
+            <div class="work-art">
+              <div class="pm">
+                <div class="pm-bar">
+                  <span class="pm-logo">S</span>
+                  <span class="pm-title">Club Selection</span>
+                  <span class="pm-who">Registration open</span>
+                </div>
+                <div class="pm-body">
+                  <div class="pm-clubs">
+                    <div class="pm-club"><b>Photography Society</b><i>Ms Haldane</i>
+                      <p>Darkroom sessions and a print show at the end of term.</p>
+                      <div class="pm-track"><span style="width:31%"></span></div>
+                      <span class="pm-count">5 of 16</span></div>
+                    <div class="pm-club"><b>Debate Union</b><i>Mr Okonkwo</i>
+                      <p>Weekly motions, with an inter-school round in March.</p>
+                      <div class="pm-track"><span style="width:72%"></span></div>
+                      <span class="pm-count">13 of 18</span></div>
+                    <div class="pm-club"><b>Marine Conservation</b><i>Ms Lindqvist</i>
+                      <p>Reef surveys, beach counts and a term of water testing.</p>
+                      <div class="pm-track"><span style="width:45%"></span></div>
+                      <span class="pm-count">9 of 20</span></div>
+                    <div class="pm-club is-full"><b>Jazz Ensemble</b><i>Mr Baptiste</i>
+                      <p>Small group playing. Some reading ability expected.</p>
+                      <div class="pm-track"><span style="width:100%"></span></div>
+                      <span class="pm-count">Full</span></div>
+                    <div class="pm-club is-mine"><b>Robotics Workshop</b><i>Ms Torres</i>
+                      <p>Build a machine that solves one problem properly.</p>
+                      <div class="pm-track"><span style="width:58%"></span></div>
+                      <span class="pm-count">Your club</span></div>
+                    <div class="pm-club"><b>Film Society</b><i>Mr Vasquez</i>
+                      <p>One film a fortnight, then an argument about it.</p>
+                      <div class="pm-track"><span style="width:20%"></span></div>
+                      <span class="pm-count">3 of 15</span></div>
+                  </div>
                 </div>
               </div>
-              <div class="app-panel">
-                <span class="app-panel-h">Activity</span>
-                <div class="app-rows">
-                  <div class="app-row"><span>Form submission routed</span><em class="is-ok">Auto</em></div>
-                  <div class="app-row"><span>Approval requested</span><em>Queued</em></div>
-                  <div class="app-row"><span>Record synchronised</span><em class="is-ok">Auto</em></div>
-                  <div class="app-row"><span>Reminder dispatched</span><em class="is-ok">Sent</em></div>
-                  <div class="app-row"><span>Weekly report generated</span><em>Ready</em></div>
-                </div>
-              </div>
             </div>
-          </div>
+            <span class="work-tag">Club selection</span>
+          </button>
+
+          <button class="work-panel" type="button" data-panel="2" aria-label="Next project">
+            <div class="work-art"><div class="pm pm--soon"><span>Next project</span></div></div>
+            <span class="work-tag">In progress</span>
+          </button>
+
         </div>
       </div>
     </div>
@@ -478,6 +512,6 @@
   </div>
 </footer>
 
-<script src="/assets/js/main.js?v=202609092130" defer></script>
+<script src="/assets/js/main.js?v=202609101025" defer></script>
 </body>
 </html>
