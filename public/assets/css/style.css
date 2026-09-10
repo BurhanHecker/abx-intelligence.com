@@ -1130,3 +1130,22 @@ h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;letter-spacing:-.03e
 .pm-fb li::before{position:absolute;left:0;top:-1px;font-size:.7rem;font-weight:700;}
 .pm-fb li.ok::before{content:"\2713";color:#4FD1A5;}
 .pm-fb li.no::before{content:"\00D7";color:#FB923C;}
+
+/* the lift under the pointer, per kind of card. The portal widget already had
+   one; the club and grading cards need their own so the walk reads the same
+   on every panel. */
+.pm-club,.pm-ans,.pm-mark,.pm-fb{
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease),
+             border-color .3s var(--ease);
+}
+.pm-club.is-hot,.pm-ans.is-hot,.pm-mark.is-hot,.pm-fb.is-hot{
+  transform:translateY(-4px);
+  box-shadow:0 12px 24px rgba(0,0,0,.55);
+  border-color:var(--s-accent);
+}
+/* the two that carry their own colour keep it rather than turning blue */
+.pm-club.is-mine.is-hot{border-color:#E8B008;}
+.pm-mark.is-hot,.pm-fb.is-hot{border-color:#4FD1A5;}
+@media (prefers-reduced-motion:reduce){
+  .pm-club,.pm-ans,.pm-mark,.pm-fb{transition:none;}
+}

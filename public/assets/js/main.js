@@ -319,55 +319,60 @@
 
     if (!reduced) tick();
 
-    /* --- the portal replays itself while its panel is the open one ----- */
-    var mock = $('[data-portal-mock]', work);
-    if (!mock || reduced) return;
-    var cursor = $('[data-cursor]', mock);
-    var widgets = $$('.pm-w', mock);
-    if (!cursor || !widgets.length) return;
+    /* --- each mock replays itself while its own panel is open ---------- */
+    if (reduced) return;
 
-    var w = 0, timers = [];
-    var wait = function (fn, ms) { timers.push(setTimeout(fn, ms)); };
+    panels.forEach(function (panel) {
+      var mock = $('.pm', panel);
+      if (!mock) return;
+      var cursor = $('[data-cursor]', mock);
+      var targets = $$('[data-hot]', mock);
+      if (!cursor || !targets.length) return;
 
-    function beat() {
-      var host = mock.closest('.work-panel');
-      if (document.hidden || (host && !host.classList.contains('is-open'))) {
-        cursor.style.opacity = '0';
-        return wait(beat, 900);
+      var n = 0, timers = [];
+      var wait = function (fn, ms) { timers.push(setTimeout(fn, ms)); };
+
+      function beat() {
+        /* sit out while this panel is closed, so the pointer is never
+           part-way through a walk when the panel opens */
+        if (document.hidden || !panel.classList.contains('is-open')) {
+          cursor.style.opacity = '0';
+          n = 0;
+          return wait(beat, 800);
+        }
+
+        var target = targets[n % targets.length];
+        var box = target.getBoundingClientRect();
+        var frame = mock.getBoundingClientRect();
+        if (!box.width) return wait(beat, 800);
+
+        cursor.style.opacity = '1';
+        cursor.style.transform = 'translate(' +
+          (box.left - frame.left + box.width * 0.44) + 'px,' +
+          (box.top - frame.top + box.height * 0.42) + 'px)';
+
+        wait(function () {
+          cursor.classList.add('is-click');
+          target.classList.add('is-hot');
+          wait(function () { cursor.classList.remove('is-click'); }, 150);
+        }, 820);
+
+        wait(function () {
+          target.classList.remove('is-hot');
+          n++;
+          beat();
+        }, 1950);
       }
-      var target = widgets[w % widgets.length];
-      var box = target.getBoundingClientRect();
-      var frame = mock.getBoundingClientRect();
-      if (!box.width) return wait(beat, 900);
 
-      cursor.style.opacity = '1';
-      cursor.style.transform = 'translate(' +
-        (box.left - frame.left + box.width * 0.44) + 'px,' +
-        (box.top - frame.top + box.height * 0.42) + 'px)';
+      /* Started directly rather than from an observer. Three panels sharing
+         one strip meant three observers on the same node, and only the first
+         reliably fired -- so two of the three pointers never moved. The loop
+         already sits out while its panel is closed, which is all the gating
+         it needed. */
+      wait(beat, 500);
 
-      wait(function () {
-        cursor.classList.add('is-click');
-        target.classList.add('is-hot');
-        wait(function () { cursor.classList.remove('is-click'); }, 150);
-      }, 880);
-
-      wait(function () {
-        target.classList.remove('is-hot');
-        w++;
-        beat();
-      }, 2100);
-    }
-
-    if ('IntersectionObserver' in window) {
-      var io = new IntersectionObserver(function (e) {
-        if (!e[0].isIntersecting) return;
-        io.disconnect();
-        wait(beat, 600);
-      }, { threshold: 0.25 });
-      io.observe(work);
-    } else wait(beat, 600);
-
-    window.addEventListener('pagehide', function () { timers.forEach(clearTimeout); });
+      window.addEventListener('pagehide', function () { timers.forEach(clearTimeout); });
+    });
   });
 
 })();
