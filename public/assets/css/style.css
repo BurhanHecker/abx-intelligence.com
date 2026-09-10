@@ -904,11 +904,24 @@ h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;letter-spacing:-.03e
    The two calls to action moved out of the hero: the headline holds that
    space alone now, and these read as the next step once the product has
    been seen rather than as chrome beside the first sentence. */
-.hero-next{padding:0 0 clamp(56px,7vw,96px);}
-.hero-next .container{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+/* The two calls to action sit beside the carousel rather than under it.
+   Stacked in a narrow column they cost no vertical space of their own, and
+   the strip gets the rest of the row. */
+.stage-row{display:flex;align-items:center;gap:clamp(16px,2.2vw,30px);}
+.stage-cta{display:flex;flex-direction:column;gap:10px;flex:none;width:clamp(150px,15vw,200px);}
+.stage-cta .btn{width:100%;justify-content:center;}
+.stage-row .stage-inner{flex:1;min-width:0;margin-inline:0;}
+@media (max-width:860px){
+  /* below this the column is too narrow to read, so it goes back underneath */
+  .stage-row{flex-direction:column;align-items:stretch;}
+  .stage-cta{width:100%;flex-direction:row;order:2;}
+  .stage-cta .btn{flex:1;}
+  /* stretch alone left this sized by its content, which put a 1040px strip
+     inside a 331px column and pushed most of the mock off the screen */
+  .stage-row .stage-inner{width:100%;max-width:100%;flex:none;}
+}
 @media (max-width:560px){
-  .hero-next .container{flex-direction:column;}
-  .hero-next .btn{width:100%;}
+  .stage-cta{flex-direction:column;}
 }
 
 
@@ -968,7 +981,7 @@ h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;letter-spacing:-.03e
    the panel only changes how much of it you can see.
    ========================================================================== */
 .work{margin-top:8px;}
-.work-strip{display:flex;gap:10px;height:clamp(260px,34vw,420px);}
+.work-strip{display:flex;gap:10px;height:clamp(230px,28vw,350px);}
 .work-panel{
   position:relative;flex:0 0 auto;width:clamp(56px,7vw,92px);
   border:1px solid var(--line);border-radius:var(--r-lg);
@@ -983,7 +996,7 @@ h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;letter-spacing:-.03e
 .work-art > *{
   position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
   min-height:100%;
-  width:min(1240px,92vw);aspect-ratio:3/1;
+  width:min(1240px,92vw);aspect-ratio:3.6/1;
 }
 .work-tag{
   position:absolute;left:0;right:0;bottom:0;z-index:2;
@@ -1002,9 +1015,13 @@ h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;letter-spacing:-.03e
 .work-line.is-on{opacity:1;}
 @media (max-width:760px){
   .work-strip{flex-direction:column;height:auto;gap:8px;}
-  .work-panel{width:100%;height:64px;transition:height .6s var(--ease);}
-  .work-panel.is-open{height:min(56vw,300px);}
-  .work-art > *{width:min(150vw,700px);aspect-ratio:16/11;}
+  .work-panel{width:100%;height:56px;transition:height .6s var(--ease);}
+  .work-panel.is-open{height:200px;}
+  /* The mock was being drawn at a different shape here than the panel, so it
+     cropped to unreadable fragments. Held at the same ratio as everywhere
+     else and drawn wide enough that its text is still legible, it crops
+     sideways instead -- you see less of it, but what you see reads. */
+  .work-art > *{width:700px;aspect-ratio:3.6/1;}
 }
 
 /* ---------- the portal mock ---------- */
