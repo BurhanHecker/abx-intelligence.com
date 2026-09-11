@@ -1268,8 +1268,8 @@ h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;letter-spacing:-.03e
   .work-dots i.on{width:18px;background:var(--red);}
 
   /* mocks, reflowed for a narrow screen */
-  .pm-bar{padding:10px 12px;}
-  .pm-who{display:none;}
+  /* the label under each card already names it */
+  .pm-bar{display:none;}
   .pm-body{padding:12px;gap:10px;}
   /* student portal: the notice, then two widgets side by side */
   .pm-widgets{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;}

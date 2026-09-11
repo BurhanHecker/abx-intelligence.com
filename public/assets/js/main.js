@@ -310,7 +310,10 @@
     function tick() {
       clearTimeout(hold);
       hold = setTimeout(function () {
-        if (!document.hidden && !mobile.matches) open(at + 1);
+        if (!document.hidden) {
+          if (mobile.matches) goTo(at + 1);
+          else open(at + 1);
+        }
         tick();
       }, HOLD);
     }
@@ -322,14 +325,39 @@
     /* --- phones: a swipeable row, one card at a time -------------------
        The strip scrolls sideways and snaps. Whichever card sits in the
        middle is the open one, so its pointer replays and the dots follow.
-       Nothing advances by itself here: moving a row the reader is holding
-       would fight their thumb. */
+       It moves on by itself on the same timer as desktop, but holds still
+       while a finger is on it; letting go, or tapping a card, restarts the
+       count, so it never jumps away from a card someone has just chosen. */
     var strip = $('.work-strip', work);
     var dots = $$('.work-dots i', work);
 
     function paintDots() {
       if (!dots) return;
       dots.forEach(function (d, i) { d.classList.toggle('on', i === at); });
+    }
+
+    /* scroll the strip, never the page. scrollIntoView would also nudge the
+       page vertically when the hero is part-way off screen, which on a timer
+       would move the page under someone reading further down. */
+    /* The open card and the dots move first, then the strip follows.
+       Leaving that to the scroll event let the two drift apart: when an
+       event came late, the next tick aimed at the same card again and the
+       row stuck on its second card. While the strip is being steered, the
+       positions it passes on the way are ignored, so the dots do not flick
+       back mid-slide; a timeout clears the steer if no event arrives. */
+    var steer = -1, steerTimer = null;
+    function goTo(n) {
+      if (!strip) return;
+      n = (n + panels.length) % panels.length;
+      var p = panels[n];
+      open(n);
+      steer = n;
+      clearTimeout(steerTimer);
+      steerTimer = setTimeout(function () { steer = -1; }, 1200);
+      strip.scrollTo({
+        left: p.offsetLeft + p.offsetWidth / 2 - strip.clientWidth / 2,
+        behavior: reduced ? 'auto' : 'smooth'
+      });
     }
 
     function centred() {
@@ -345,16 +373,23 @@
       strip.addEventListener('scroll', function () {
         if (!mobile.matches) return;
         var n = centred();
+        if (steer > -1) {
+          if (n === steer) steer = -1;
+          return;
+        }
         if (n !== at) open(n);
       }, { passive: true });
 
-      panels.forEach(function (p) {
-        p.addEventListener('click', function () {
-          if (mobile.matches) {
-            p.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'nearest', inline: 'center' });
-          }
-        });
+      panels.forEach(function (p, i) {
+        p.addEventListener('click', function () { if (mobile.matches) goTo(i); });
       });
+
+      /* a finger on the row holds it; letting go restarts the count */
+      var hush = function () { clearTimeout(hold); steer = -1; };
+      var resume = function () { if (!reduced) tick(); };
+      strip.addEventListener('touchstart', hush, { passive: true });
+      strip.addEventListener('touchend', resume, { passive: true });
+      strip.addEventListener('touchcancel', resume, { passive: true });
     }
     paintDots();
 
