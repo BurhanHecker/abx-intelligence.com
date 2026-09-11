@@ -299,16 +299,18 @@
 
     var at = 0, hold = null;
     var HOLD = 5200;
+    var mobile = window.matchMedia('(max-width:760px)');
 
     function open(n) {
       at = (n + panels.length) % panels.length;
       panels.forEach(function (p, i) { p.classList.toggle('is-open', i === at); });
+      paintDots();
     }
 
     function tick() {
       clearTimeout(hold);
       hold = setTimeout(function () {
-        if (!document.hidden) open(at + 1);
+        if (!document.hidden && !mobile.matches) open(at + 1);
         tick();
       }, HOLD);
     }
@@ -316,6 +318,45 @@
     panels.forEach(function (panel, i) {
       panel.addEventListener('click', function () { open(i); tick(); });
     });
+
+    /* --- phones: a swipeable row, one card at a time -------------------
+       The strip scrolls sideways and snaps. Whichever card sits in the
+       middle is the open one, so its pointer replays and the dots follow.
+       Nothing advances by itself here: moving a row the reader is holding
+       would fight their thumb. */
+    var strip = $('.work-strip', work);
+    var dots = $$('.work-dots i', work);
+
+    function paintDots() {
+      if (!dots) return;
+      dots.forEach(function (d, i) { d.classList.toggle('on', i === at); });
+    }
+
+    function centred() {
+      var mid = strip.scrollLeft + strip.clientWidth / 2, best = 0, gap = Infinity;
+      panels.forEach(function (p, i) {
+        var d = Math.abs(p.offsetLeft + p.offsetWidth / 2 - mid);
+        if (d < gap) { gap = d; best = i; }
+      });
+      return best;
+    }
+
+    if (strip) {
+      strip.addEventListener('scroll', function () {
+        if (!mobile.matches) return;
+        var n = centred();
+        if (n !== at) open(n);
+      }, { passive: true });
+
+      panels.forEach(function (p) {
+        p.addEventListener('click', function () {
+          if (mobile.matches) {
+            p.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'nearest', inline: 'center' });
+          }
+        });
+      });
+    }
+    paintDots();
 
     if (!reduced) tick();
 
@@ -344,7 +385,7 @@
         var target = targets[n % targets.length];
         var box = target.getBoundingClientRect();
         var frame = mock.getBoundingClientRect();
-        if (!box.width) return wait(beat, 800);
+        if (!box.width) { n++; return wait(beat, 400); }
 
         cursor.style.opacity = '1';
         cursor.style.transform = 'translate(' +
@@ -374,5 +415,96 @@
       window.addEventListener('pagehide', function () { timers.forEach(clearTimeout); });
     });
   });
+
+  /* ------------------------------------------------------------------
+     Solutions page: tabs on phones
+     Four long blocks become one at a time under a tab bar. Only active at
+     phone widths, and only once this has run: without JavaScript, or on a
+     wider screen, every block shows as normal.
+     ------------------------------------------------------------------ */
+  (function () {
+    var bar = $('.sol-tabs');
+    if (!bar) return;
+    var tabs = $$('[data-tab]', bar);
+    var ids = tabs.map(function (t) { return t.getAttribute('data-tab'); });
+    var panes = ids.map(function (id) { return document.getElementById(id); });
+    if (panes.some(function (p) { return !p; })) return;
+    var phone = window.matchMedia('(max-width:760px)');
+
+    function show(id) {
+      tabs.forEach(function (t, i) {
+        var on = ids[i] === id;
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.tabIndex = on ? 0 : -1;
+        panes[i].classList.toggle('is-tab-hidden', !on);
+      });
+      var sel = tabs[ids.indexOf(id)];
+      var br = bar.getBoundingClientRect(), sr = sel.getBoundingClientRect();
+      if (sr.right > br.right - 24 || sr.left < br.left) {
+        bar.scrollLeft += sr.left - br.left - 12;
+      }
+    }
+
+    function mode() {
+      var on = phone.matches;
+      document.documentElement.classList.toggle('has-sol-tabs', on);
+      panes.forEach(function (p, i) {
+        if (on) { p.setAttribute('role', 'tabpanel'); p.setAttribute('aria-labelledby', tabs[i].id); }
+        else { p.removeAttribute('role'); p.removeAttribute('aria-labelledby'); }
+      });
+    }
+
+    function topOf(i) {
+      if (phone.matches && panes[i].getBoundingClientRect().top < 0) {
+        panes[i].scrollIntoView({ block: 'start' });
+      }
+    }
+
+    /* jump without the page-wide smooth scroll animating it */
+    function jumpTo(i) {
+      if (!phone.matches) return;
+      var root = document.documentElement, was = root.style.scrollBehavior;
+      root.style.scrollBehavior = 'auto';
+      panes[i].scrollIntoView({ block: 'start' });
+      root.style.scrollBehavior = was;
+    }
+
+    /* a link such as /solutions#automation opens that tab. The browser has
+       already scrolled to the hash while every block was showing; hiding the
+       others moves the target, so the jump is made again here, and once more
+       after load in case fonts shifted the layout. */
+    function fromHash() {
+      var i = ids.indexOf((location.hash || '').slice(1));
+      if (i < 0) return -1;
+      show(ids[i]);
+      jumpTo(i);
+      return i;
+    }
+
+    /* mode first: until the bar is displayed it has no size, and show()
+       measures it to keep the selected tab in view */
+    mode();
+    var linked = fromHash();
+    if (linked < 0) show(ids[0]);
+    else window.addEventListener('load', function () { jumpTo(linked); });
+    if (phone.addEventListener) phone.addEventListener('change', mode);
+    else if (phone.addListener) phone.addListener(mode);
+    window.addEventListener('hashchange', fromHash);
+
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { show(ids[i]); topOf(i); });
+      t.addEventListener('keydown', function (e) {
+        var n = -1, last = ids.length - 1;
+        if (e.key === 'ArrowRight') n = i === last ? 0 : i + 1;
+        else if (e.key === 'ArrowLeft') n = i === 0 ? last : i - 1;
+        else if (e.key === 'Home') n = 0;
+        else if (e.key === 'End') n = last;
+        if (n < 0) return;
+        e.preventDefault();
+        show(ids[n]);
+        tabs[n].focus();
+      });
+    });
+  })();
 
 })();
