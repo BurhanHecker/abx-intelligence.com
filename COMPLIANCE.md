@@ -161,12 +161,29 @@ Verify all decree numbers.
 
 ## Before you launch
 
-1. Replace every `.pending-note` block. Search the repo for `pending-note` to find them.
-2. Contact email is `sales@abx-intelligence.com`. Confirm that mailbox receives mail.
-3. Add your Web3Forms access key in `contact.html`.
-4. Confirm the last-updated dates on the four legal pages.
-5. Have the legal pages reviewed by an Omani lawyer.
-6. Delete the `.pending-note` CSS rule from `assets/css/style.css` once all are gone.
+Status as of 12 September 2026.
+
+Done:
+
+- Every red placeholder box on the legal pages is filled in or removed.
+- Contact email is `sales@abx-intelligence.com`, a Hostinger mailbox.
+- The Web3Forms access key is installed and the form sends.
+- The legal pages name Neo Technology Solutions LLC (CR 1355566) as the
+  operating entity, and their last-updated dates are current.
+
+Still to do:
+
+1. **Set Web3Forms retention to 30 days** in the Web3Forms dashboard. The
+   Privacy Policy now states that the copy Web3Forms holds is deleted after
+   30 days. Until the setting matches, that statement is untrue.
+2. **Have the four legal pages reviewed by a lawyer qualified in Oman.** The
+   note saying so has been taken off the public pages, because it was advice
+   to you rather than information for visitors. The advice stands: the pages
+   are a careful draft, not legal advice.
+3. **Keep them true.** If you add analytics, a new form provider, a new host,
+   or start taking payments differently, the Cookie, Privacy and Refund pages
+   must change first. Several of them state specific facts (no cookies, which
+   providers receive data, 14-day payment terms) that go stale silently.
 
 ---
 
