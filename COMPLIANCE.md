@@ -162,7 +162,7 @@ Verify all decree numbers.
 ## Before you launch
 
 1. Replace every `.pending-note` block. Search the repo for `pending-note` to find them.
-2. Replace `burhan.dairkee@gmail.com` with the address you actually monitor.
+2. Contact email is `sales@abx-intelligence.com`. Confirm that mailbox receives mail.
 3. Add your Web3Forms access key in `contact.html`.
 4. Confirm the last-updated dates on the four legal pages.
 5. Have the legal pages reviewed by an Omani lawyer.
