@@ -249,3 +249,47 @@ failure continues after notice.
 - Omanisation rule for foreign-owned companies: fragomen.com
 - Government fee ranges: omanverified.com, setupinoman.com
 - Form 5472 penalty: llcuniversity.com, greenbacktaxservices.com
+
+---
+
+# Appendix: operating through NeoTecx (recorded 12 September 2026)
+
+ABX Intelligence is not a company in its own right yet. It trades as a brand
+operated by **Neo Technology Solutions LLC** (NeoTecx), registered in Oman
+under CR 1355566. NeoTecx has agreed to be named publicly on the site.
+Invoices carry NeoTecx's bank details and registered stamp, payments go to
+NeoTecx, and NeoTecx passes the founders' share on by cheque.
+
+**Verify the CR number** against NeoTecx's certificate before relying on it.
+It could not be confirmed from public sources.
+
+## What this changes
+
+- **The legal pages** now name NeoTecx as the operating entity and the
+  party payments are made to. That is what makes them accurate.
+- **Contracts, invoices and DPAs** should name *Neo Technology Solutions
+  LLC, trading as ABX Intelligence* as the party. ABX is not a legal person,
+  so a document signed only as "ABX Intelligence" may not bind anyone,
+  including the client. Where the DPA makes you the processor of a school's
+  student data, it matters most that the named processor actually exists.
+- **The Omanisation point** in the structure appendix above applies to
+  companies you register yourselves. While you operate through NeoTecx, it is
+  NeoTecx's position that counts. Confirm with them.
+- **Being under 18** matters less while NeoTecx is the contracting party,
+  since the founders are not signing on the company's behalf.
+
+## Get a written agreement with NeoTecx
+
+At present the arrangement appears to rest on goodwill. Put it in writing,
+even briefly, covering:
+
+1. What share of each payment passes to the founders, and when.
+2. **Who owns the software you build.** If NeoTecx invoices for it, NeoTecx
+   could argue it owns the resulting IP. You almost certainly want to keep it.
+3. Who carries liability if a system fails or data is breached.
+4. What happens to clients, contracts and IP if you later register ABX as its
+   own company, or if the arrangement ends.
+5. Whether NeoTecx's name and CR may appear on your site and documents (it
+   has agreed; record it).
+
+This is the single most useful thing to take to a lawyer now.
