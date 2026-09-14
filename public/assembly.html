@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Assembly | ABX Intelligence</title>
+<meta name="description" content="Design your own website by recognising it rather than describing it. Scroll through layouts, colour, type and components one at a time, and send us the brief.">
+<meta name="theme-color" content="#121314">
+<link rel="canonical" href="https://abx-intelligence.com/assembly">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://abx-intelligence.com/assembly">
+<meta property="og:title" content="Assembly | ABX Intelligence">
+<meta property="og:description" content="Design your own website by recognising it rather than describing it. One option at a time, full size.">
+<meta property="og:site_name" content="ABX Intelligence">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico?v=202609121500" sizes="any">
+<link rel="icon" href="/assets/img/favicon-32.png?v=202609121500" type="image/png" sizes="32x32">
+<link rel="icon" href="/assets/img/favicon-512.png?v=202609121500" type="image/png" sizes="512x512">
+<link rel="apple-touch-icon" href="/assets/img/favicon-180.png?v=202609121500">
+<link rel="preload" href="/assets/fonts/instrument-sans-600.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/fonts.css?v=202609121500">
+<link rel="stylesheet" href="/assets/css/style.css?v=202609121500">
+<link rel="stylesheet" href="/assets/css/assembly.css?v=202609121500">
+</head>
+<body class="assembly-page">
+<a class="skip" href="#main">Skip to content</a>
+<div class="grain" aria-hidden="true"></div>
+<div class="scroll-bar" aria-hidden="true"></div>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="logo" href="/">
+      <picture>
+        <source media="(max-width:640px)" type="image/webp" srcset="/assets/img/logo-mark.webp 1x, /assets/img/logo-mark@2x.webp 2x">
+        <source media="(max-width:640px)" type="image/png" srcset="/assets/img/logo-mark.png 1x, /assets/img/logo-mark@2x.png 2x">
+        <source type="image/webp" srcset="/assets/img/logo-lockup.webp 1x, /assets/img/logo-lockup@2x.webp 2x">
+        <img src="/assets/img/logo-lockup.png" srcset="/assets/img/logo-lockup.png 1x, /assets/img/logo-lockup@2x.png 2x" alt="ABX Intelligence. Understand. Adapt. Excel." decoding="async">
+      </picture>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="/assembly" class="is-active">Assembly</a>
+      <a href="/solutions">Solutions</a>
+      <a href="/services">Services</a>
+      <a href="/about">About</a>
+      <a href="/approach">Our Approach</a>
+      <a href="/contact">Contact</a>
+    </nav>
+    <div class="nav-cta">
+      <a class="btn btn--primary btn--sm" href="/contact">Request a Consultation</a>
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+<!-- ---------------------------------------------------------------- hero -->
+<section class="hero">
+  <div class="hero-3d" aria-hidden="true">
+    <div class="slab s1"></div><div class="slab s2"></div><div class="slab s3"></div>
+    <div class="slab s4"></div><div class="slab s5"></div><div class="slab s6"></div>
+  </div>
+
+  <div class="hero-in">
+    <p class="kicker"><i></i>The all-new</p>
+    <h1 class="wordmark">Assembly</h1>
+    <p class="lede">
+      Build your own website the way you find music — scroll, and stop when
+      something is right. No brief to write. No vocabulary to learn.
+    </p>
+    <a class="cta" href="#stage">Start building<em>&#8595;</em></a>
+  </div>
+
+  <div class="scroll-hint" aria-hidden="true"><span></span></div>
+</section>
+
+<!-- --------------------------------------------------------------- facts -->
+<section class="facts">
+  <div class="fact"><b id="f-combos">—</b><span>possible sites, counted — not a slogan</span></div>
+  <div class="fact"><b>2,764,800</b><span>colour schemes, every one contrast-checked</span></div>
+  <div class="fact"><b>576</b><span>type pairings across 24 families</span></div>
+  <div class="fact"><b>12 / 56</b><span>kinds of site, and the parts they are built from</span></div>
+</section>
+
+<section class="pitch">
+  <h2>You will know it when you see it.</h2>
+  <p>
+    Most people cannot describe the website they want, and every agency asks
+    them to anyway. Assembly asks you to recognise it instead. One option at a
+    time, full size, doing the thing it will actually do — hover it, watch it
+    move. Say <em>more like this</em> and the next ones follow your eye.
+  </p>
+</section>
+
+<!-- --------------------------------------------------------------- stage -->
+<section class="stage-sec" id="stage">
+
+  <div class="stage-head">
+    <nav class="steps" id="steps"></nav>
+  </div>
+
+  <div class="stage-outer">
+    <div class="stage" id="stage-box">
+      <div class="stage-bar">
+        <div>
+          <h2 id="sec-title">Type</h2>
+          <p id="sec-note"></p>
+          <p id="sec-uses" class="sec-uses" hidden></p>
+        </div>
+        <div class="stage-count" id="counter"></div>
+      </div>
+
+      <div class="reel" id="reel"></div>
+
+      <!-- Shown once, over the reel, before anything is chosen. Nobody reads
+           an instruction line; they will watch a cursor do it. -->
+      <div class="intro" id="intro">
+        <div class="intro-stage" id="intro-stage">
+          <div class="intro-card" id="intro-start">
+            <p class="intro-kicker">Before you begin</p>
+            <h3>Twelve ways to lay out a page.</h3>
+            <p class="intro-lede">One at a time, full size. Takes about two minutes.</p>
+            <button class="cta-btn" id="intro-go" type="button">Click here to start</button>
+          </div>
+
+          <div class="intro-card" id="intro-title" hidden>
+            <p class="intro-kicker">First</p>
+            <h3 id="intro-title-h">Styles of website layout</h3>
+          </div>
+
+          <div class="ghost-cursor" id="ghost" hidden>
+            <svg viewBox="0 0 24 24"><path d="M5 3l14 7-6 2-2 6z"/></svg>
+          </div>
+          <div class="ghost-say" id="ghost-say" hidden></div>
+        </div>
+      </div>
+
+      <div class="stage-foot">
+        <div class="steer" id="steer" hidden>
+          <span>Following <b id="steer-name"></b></span>
+          <button type="button" id="steer-clear">Reset</button>
+        </div>
+        <div class="hintbar" id="hintbar">
+          <kbd>&#8593;</kbd><kbd>&#8595;</kbd> move · <kbd>Enter</kbd> select
+        </div>
+        <button class="done-btn" id="done-btn" type="button" hidden>Done — review my brief</button>
+      </div>
+
+      <!-- side controls -->
+      <div class="pager">
+        <button id="up" type="button" aria-label="Previous option"><span>&#8593;</span></button>
+        <button id="down" type="button" aria-label="Next option"><span>&#8595;</span></button>
+      </div>
+
+      <!-- the two actions -->
+      <div class="acts">
+        <button class="act-btn" id="act-like" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          <em id="like-label">More like this</em>
+        </button>
+        <button class="act-btn act-pick" id="act-pick" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+          <em id="pick-label">Select</em>
+        </button>
+      </div>
+    </div>
+
+    <aside class="sofar" id="sofar"></aside>
+  </div>
+</section>
+
+<div class="done" id="done" hidden></div>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="logo logo--foot" href="/">
+          <picture>
+            <source type="image/webp" srcset="/assets/img/logo-lockup.webp 1x, /assets/img/logo-lockup@2x.webp 2x">
+            <img src="/assets/img/logo-lockup.png" srcset="/assets/img/logo-lockup.png 1x, /assets/img/logo-lockup@2x.png 2x" alt="ABX Intelligence" loading="lazy" decoding="async">
+          </picture>
+        </a>
+        <p>Intelligent Systems. Built for People.</p>
+      </div>
+      <div>
+        <h2 class="foot-h">Company</h2>
+        <ul>
+          <li><a href="/about">About</a></li>
+          <li><a href="/approach">Our Approach</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="foot-h">What we do</h2>
+        <ul>
+          <li><a href="/assembly">Assembly</a></li>
+          <li><a href="/solutions">Solutions</a></li>
+          <li><a href="/services">Services</a></li>
+          <li><a href="/solutions#platform">Our Platform</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="foot-h">Legal</h2>
+        <ul>
+          <li><a href="/privacy">Privacy Policy</a></li>
+          <li><a href="/terms">Terms &amp; Conditions</a></li>
+          <li><a href="/cookies">Cookie Policy</a></li>
+          <li><a href="/refunds">Payment &amp; Refunds</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bot">
+      <span>&copy; <span data-year>2026</span> ABX Intelligence. All rights reserved.</span>
+      <span>Intelligent Systems. Built for People.</span>
+    </div>
+  </div>
+</footer>
+
+
+<script src="/assets/js/main.js?v=202609101355" defer></script>
+</body>
+<script type="module" src="/assets/js/assembly/app.js?v=202609121500"></script>
+</body>
+</html>
