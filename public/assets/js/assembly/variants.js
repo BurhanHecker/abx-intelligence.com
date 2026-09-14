@@ -49,6 +49,24 @@ export function menuName(g) {
   return `${MENU_FILL[g.fill]} · ${MENU_HOVER[g.hover]}`;
 }
 
+/* The style name alone repeats every fifty options, which makes a feed of
+   genuinely different menus read as a loop. These spell out the axes that
+   actually differ between two menus sharing a name. */
+export function menuDetail(g) {
+  const bits = [`${g.size.toFixed(0)}px`];
+  if (g.caseMode) bits.push("caps");
+  if (g.tracking > .06) bits.push("tracked");
+  if (g.weight >= 700) bits.push("bold");
+  else if (g.weight <= 400) bits.push("light");
+  bits.push(g.gap > 32 ? "wide spacing" : g.gap < 20 ? "tight" : "even spacing");
+  bits.push(g.cta === 1 ? "solid button" : g.cta === 2 ? "outlined button" : "no button");
+  if (g.rule === 2) bits.push("heavy rule");
+  else if (g.rule === 0) bits.push("no rule");
+  if (g.radius >= 18) bits.push("pill links");
+  else if (g.radius <= 3) bits.push("square links");
+  return bits.join(", ");
+}
+
 export function renderMenuVariant(g, pos, p, t, s) {
   const k = nextId();
   const r = Math.round(g.radius);
@@ -174,6 +192,17 @@ export const BUTTON_SPEC = {
 export const buttonName = (g) =>
   `${BTN_FILL[g.fill]} · ${BTN_SHAPE[g.shape]} · ${BTN_HOVER[g.hover]}`;
 
+export function buttonDetail(g) {
+  const bits = [`${g.size.toFixed(0)}px`];
+  if (g.caseMode) bits.push("caps");
+  if (g.tracking > .06) bits.push("tracked");
+  bits.push(g.weight >= 700 ? "bold" : "medium");
+  bits.push(g.padX > 32 ? "roomy" : g.padX < 23 ? "compact" : "standard padding");
+  if (g.icon === 1) bits.push("with arrow");
+  else if (g.icon === 2) bits.push("with dot");
+  return bits.join(", ");
+}
+
 export function renderButtonVariant(g, p, t, s) {
   const k = nextId();
   const r = [0, Math.max(4, Math.min(s.radius, 14)), 999][g.shape];
@@ -249,17 +278,36 @@ const HERO_SHAPE = ["Centred","Ranged left","Split","Image behind","Panel on col
 const HERO_ART   = ["No image","Gradient","Shapes","Interface"];
 
 export const HERO_SPEC = {
-  shape:  { discrete:true, values:[0,1,2,3,4,5,6,7,8], weight:1.7 },
-  art:    { discrete:true, values:[0,1,2,3], weight:1.2 },
-  size:   { range:[34,76], weight:1.1 },
-  kicker: { discrete:true, values:[0,1], weight:.7 },
-  sub:    { discrete:true, values:[0,1], weight:.6 },
-  actions:{ discrete:true, values:[1,2], weight:.7 },
-  pad:    { range:[40,100], weight:.6 },
-  tall:   { range:[440,620], weight:.5 },
+  shape:    { discrete:true, values:[0,1,2,3,4,5,6,7,8], weight:1.7 },
+  art:      { discrete:true, values:[0,1,2,3], weight:1.2 },
+  size:     { range:[34,76], weight:1.1 },
+  kicker:   { discrete:true, values:[0,1], weight:.7 },
+  sub:      { discrete:true, values:[0,1], weight:.6 },
+  actions:  { discrete:true, values:[1,2], weight:.7 },
+  pad:      { range:[40,100], weight:.6 },
+  tall:     { range:[440,620], weight:.5 },
+  /* Added because hero was the one step where the options genuinely started
+     to look alike — 93% distinct over 2,000, with the first look-alike at #70.
+     These are all visible at a glance rather than numeric padding. */
+  artShape: { discrete:true, values:[1,2,3], weight:1.0 },  // soft / hard / circular
+  overlay:  { discrete:true, values:[0,1,2], weight:.8 },   // wash / scrim / none
+  badge:    { discrete:true, values:[0,1], weight:.6 },     // trust line under the action
+  ratio:    { range:[0.75,1.6], weight:.9 },                // split column balance
 };
 
 export const heroName = (g) => `${HERO_SHAPE[g.shape]} · ${HERO_ART[g.art]}`;
+
+export function heroDetail(g) {
+  const bits = [`${g.size.toFixed(0)}px headline`];
+  if (g.kicker) bits.push("eyebrow");
+  bits.push(g.sub ? "with a sub-line" : "headline only");
+  bits.push(g.actions === 2 ? "two actions" : "one action");
+  if (g.art) bits.push(["", "soft corners", "hard corners", "circular"][g.artShape] || "");
+  if (g.shape === 3) bits.push(["gradient wash", "solid scrim", "no overlay"][g.overlay]);
+  if (g.badge) bits.push("trust line");
+  bits.push(g.tall > 560 ? "tall" : g.tall < 480 ? "short" : "standard height");
+  return bits.filter(Boolean).join(", ");
+}
 
 export function renderHeroVariant(g, p, t, s) {
   const R = (n) => Math.min(s.radius, n);
@@ -276,23 +324,26 @@ export function renderHeroVariant(g, p, t, s) {
   const btn2 = g.actions === 2 ? `<span style="display:inline-block;border:1px solid ${p.line};
     color:${p.text};font-family:${t.displayStack};font-weight:600;font-size:15px;padding:14px 24px;
     border-radius:${R(14)}px;margin-left:10px">Learn more</span>` : "";
+  const artR = { 1:R(18), 2:0, 3:9999 }[g.artShape] || R(18);
+  const badge = g.badge ? `<div style="font-family:${t.bodyStack};color:${p.muted};
+    font-size:13px;margin-top:14px">No card needed · cancel anytime</div>` : "";
   const art = (h) => g.art === 0 ? "" :
     g.art === 3
-      ? `<div style="background:${p.surface};border:${s.border}px solid ${p.line};border-radius:${R(16)}px;
+      ? `<div style="background:${p.surface};border:${s.border}px solid ${p.line};border-radius:${artR}px;
            padding:18px;height:${h}px">${[92,70,84,58].map(w=>`<div style="height:12px;width:${w}%;
            border-radius:4px;background:${alpha(p.text,.1)};margin-bottom:11px"></div>`).join("")}
            <div style="height:${h-110}px;border-radius:${R(10)}px;background:${alpha(p.accent,.22)}"></div></div>`
       : g.art === 2
         ? `<div style="position:relative;height:${h}px">
-             <div style="position:absolute;width:58%;padding-top:58%;border-radius:50%;
+             <div style="position:absolute;width:58%;padding-top:58%;border-radius:${g.artShape===2?"0":"50%"};
                background:${p.accent};opacity:.85;left:4%;top:6%"></div>
-             <div style="position:absolute;width:44%;padding-top:44%;border-radius:${R(24)}px;
+             <div style="position:absolute;width:44%;padding-top:44%;border-radius:${artR}px;
                background:${p.accent2};opacity:.85;right:6%;bottom:8%"></div></div>`
-        : `<div style="height:${h}px;border-radius:${R(18)}px;
+        : `<div style="height:${h}px;border-radius:${artR}px;
              background:linear-gradient(140deg,${p.accent},${p.accent2})"></div>`;
 
   const words = `${kick}<div style="${H}">Build something worth visiting</div>${sub}
-    <div style="margin-top:28px">${btn}${btn2}</div>`;
+    <div style="margin-top:28px">${btn}${btn2}</div>${badge}`;
   const wrap = (inner, extra="") => `<div style="background:${p.ground};min-height:${tall}px;${extra}">${inner}</div>`;
 
   let html;
@@ -305,14 +356,16 @@ export function renderHeroVariant(g, p, t, s) {
     case 2:
     case 8: {
       const flip = g.shape === 8;
-      html = wrap(`<div style="display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center;
+      html = wrap(`<div style="display:grid;grid-template-columns:${g.ratio.toFixed(2)}fr 1fr;gap:44px;align-items:center;
         padding:${pad}px 52px;min-height:${tall}px">
         <div style="${flip?"order:2":""}">${words}</div>
         <div style="${flip?"order:1":""}">${art(300) || `<div style="height:300px"></div>`}</div></div>`); break;
     }
     case 3: html = wrap(`<div style="position:relative;min-height:${tall}px;
       background:linear-gradient(150deg,${p.accent},${p.accent2});display:flex;align-items:flex-end">
-      <div style="position:absolute;inset:0;background:linear-gradient(transparent 30%,${alpha(p.ground,.9)})"></div>
+      <div style="position:absolute;inset:0;background:${
+        g.overlay === 0 ? `linear-gradient(transparent 30%,${alpha(p.ground,.9)})`
+        : g.overlay === 1 ? alpha(p.ground,.55) : "transparent"}"></div>
       <div style="position:relative;padding:${pad}px 52px;max-width:70%">${words}</div></div>`); break;
     case 4: html = wrap(`<div style="background:${p.accent};padding:${pad}px 52px;display:grid;
       place-items:center;min-height:${tall}px">

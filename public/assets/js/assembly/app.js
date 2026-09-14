@@ -14,7 +14,8 @@ import { paletteCard, typeCard, shapeCard, miniSite, FALLBACK } from "./render.j
 import { LAYOUTS, SECTIONS, SECTION_NAMES, COLOUR_BASES, STEPS } from "./catalogue.js";
 import { MENU_SPEC, BUTTON_SPEC, HERO_SPEC, MENU_POSITIONS,
          renderMenuVariant, renderButtonVariant, renderHeroVariant,
-         menuName, buttonName, heroName } from "./variants.js";
+         menuName, buttonName, heroName,
+         menuDetail, buttonDetail, heroDetail } from "./variants.js";
 import { renderSiteType, renderSection, primeSectionNames } from "./parts.js";
 
 primeSectionNames(SECTION_NAMES);
@@ -218,17 +219,18 @@ function current() {
     if (s.id === "menu") {
       const pos = state.pick.menupos ? state.pick.menupos.item : MENU_POSITIONS[1];
       const out = renderMenuVariant(g, pos, c.palette, c.type, c.shape);
-      return { face:{ title:menuName(g), sub:`${pos.name} · hover the links to see it behave`,
+      return { face:{ title:menuName(g),
+                      sub:`${pos.name} · ${menuDetail(g)} · hover the links`,
                       html:out.html }, g, css:out.css, key:"menu:" + state.i };
     }
     if (s.id === "button") {
       const out = renderButtonVariant(g, c.palette, c.type, c.shape);
-      return { face:{ title:buttonName(g), sub:"Hover either button", html:out.html },
-               g, css:out.css, key:"button:" + state.i };
+      return { face:{ title:buttonName(g), sub:`${buttonDetail(g)} · hover either button`,
+                      html:out.html }, g, css:out.css, key:"button:" + state.i };
     }
     if (s.id === "hero") {
       const out = renderHeroVariant(g, c.palette, c.type, c.shape);
-      return { face:{ title:heroName(g), sub:"The first screen anyone sees", html:out.html },
+      return { face:{ title:heroName(g), sub:heroDetail(g), html:out.html },
                g, css:out.css, key:"hero:" + state.i };
     }
     const face = (s.id === "palette" ? paletteCard : s.id === "type" ? typeCard : shapeCard)(g, c);
