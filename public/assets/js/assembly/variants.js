@@ -10,8 +10,8 @@
    Everything renders inside a real page so the preview fills the stage.
    =========================================================================== */
 
-import { alpha, mix } from "./color.js";
-import { PAGE_W } from "./sites.js";
+import { alpha, mix } from "./color.js?v=202609141200";
+import { PAGE_W } from "./sites.js?v=202609141200";
 
 const esc = (s) => String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
 let uid = 0; const nextId = () => "v" + (++uid);

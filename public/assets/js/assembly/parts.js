@@ -7,8 +7,8 @@
    you see what that menu actually does.
    =========================================================================== */
 
-import { alpha, mix, onColor } from "./color.js";
-import { renderPage, PAGE_W } from "./sites.js";
+import { alpha, mix, onColor } from "./color.js?v=202609141200";
+import { renderPage, PAGE_W } from "./sites.js?v=202609141200";
 
 const esc = (s) => String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
 let uid = 0;

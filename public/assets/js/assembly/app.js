@@ -8,15 +8,15 @@
    =========================================================================== */
 
 import { PALETTE_SPEC, TYPE_SPEC, SHAPE_SPEC, buildPalette, buildType, buildShape,
-         genomeAt, distance } from "./genome.js";
-import { alpha, mix, onColor, contrast, luminance } from "./color.js";
-import { paletteCard, typeCard, shapeCard, miniSite, FALLBACK } from "./render.js";
-import { LAYOUTS, SECTIONS, SECTION_NAMES, COLOUR_BASES, STEPS } from "./catalogue.js";
+         genomeAt, distance } from "./genome.js?v=202609141200";
+import { alpha, mix, onColor, contrast, luminance } from "./color.js?v=202609141200";
+import { paletteCard, typeCard, shapeCard, miniSite, FALLBACK } from "./render.js?v=202609141200";
+import { LAYOUTS, SECTIONS, SECTION_NAMES, COLOUR_BASES, STEPS } from "./catalogue.js?v=202609141200";
 import { MENU_SPEC, BUTTON_SPEC, HERO_SPEC, MENU_POSITIONS,
          renderMenuVariant, renderButtonVariant, renderHeroVariant,
          menuName, buttonName, heroName,
-         menuDetail, buttonDetail, heroDetail } from "./variants.js";
-import { renderSiteType, renderSection, primeSectionNames } from "./parts.js";
+         menuDetail, buttonDetail, heroDetail } from "./variants.js?v=202609141200";
+import { renderSiteType, renderSection, primeSectionNames } from "./parts.js?v=202609141200";
 
 primeSectionNames(SECTION_NAMES);
 
