@@ -8,15 +8,15 @@
    =========================================================================== */
 
 import { PALETTE_SPEC, TYPE_SPEC, SHAPE_SPEC, buildPalette, buildType, buildShape,
-         genomeAt, distance } from "./genome.js?v=202609141200";
-import { alpha, mix, onColor, contrast, luminance } from "./color.js?v=202609141200";
-import { paletteCard, typeCard, shapeCard, miniSite, FALLBACK } from "./render.js?v=202609141200";
-import { LAYOUTS, SECTIONS, SECTION_NAMES, COLOUR_BASES, STEPS } from "./catalogue.js?v=202609141200";
+         genomeAt, distance } from "./genome.js?v=202609141530";
+import { alpha, mix, onColor, contrast, luminance } from "./color.js?v=202609141530";
+import { paletteCard, typeCard, shapeCard, miniSite, FALLBACK } from "./render.js?v=202609141530";
+import { LAYOUTS, SECTIONS, SECTION_NAMES, COLOUR_BASES, STEPS } from "./catalogue.js?v=202609141530";
 import { MENU_SPEC, BUTTON_SPEC, HERO_SPEC, MENU_POSITIONS,
          renderMenuVariant, renderButtonVariant, renderHeroVariant,
          menuName, buttonName, heroName,
-         menuDetail, buttonDetail, heroDetail } from "./variants.js?v=202609141200";
-import { renderSiteType, renderSection, primeSectionNames } from "./parts.js?v=202609141200";
+         menuDetail, buttonDetail, heroDetail } from "./variants.js?v=202609141530";
+import { renderSiteType, renderSection, primeSectionNames } from "./parts.js?v=202609141530";
 
 primeSectionNames(SECTION_NAMES);
 
@@ -679,5 +679,7 @@ document.addEventListener("keydown", (e) => {
   else if (e.key === "Enter") { e.preventDefault(); select(); }
 });
 
-$("f-combos").textContent = "5.9 quintillion";
+// Recomputed whenever the option space changes — see the note in the README.
+// Every axis quantised at the finest step a person can actually see.
+$("f-combos").textContent = "573 nonillion";
 draw("down");            // paints the chrome; the intro sits over the reel

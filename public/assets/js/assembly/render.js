@@ -7,8 +7,8 @@
    always looking at their own site, not a swatch.
    =========================================================================== */
 
-import { alpha, mix, onColor } from "./color.js?v=202609141200";
-import { buildPalette, buildType, buildShape, PALETTE_SPEC, TYPE_SPEC, SHAPE_SPEC } from "./genome.js?v=202609141200";
+import { alpha, mix, onColor } from "./color.js?v=202609141530";
+import { buildPalette, buildType, buildShape, PALETTE_SPEC, TYPE_SPEC, SHAPE_SPEC } from "./genome.js?v=202609141530";
 
 const esc = (s) => String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
 

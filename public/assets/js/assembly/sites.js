@@ -6,7 +6,7 @@
    are Figma's twelve; the content is invented.
    =========================================================================== */
 
-import { alpha, mix } from "./color.js?v=202609141200";
+import { alpha, mix } from "./color.js?v=202609141530";
 
 export const PAGE_W = 1180;
 const esc = (s) => String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
