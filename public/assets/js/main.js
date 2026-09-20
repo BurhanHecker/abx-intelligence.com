@@ -10,18 +10,13 @@
   var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
 
   /* ------------------------------------------------------------------
-     Sticky nav + scroll progress
+     Sticky nav
      ------------------------------------------------------------------ */
   var nav = $('.nav');
-  var bar = $('.scroll-bar');
 
   function onScroll() {
     var y = window.scrollY || document.documentElement.scrollTop;
     if (nav) nav.classList.toggle('is-stuck', y > 12);
-    if (bar) {
-      var h = document.documentElement.scrollHeight - window.innerHeight;
-      bar.style.width = (h > 0 ? (y / h) * 100 : 0) + '%';
-    }
   }
   var ticking = false;
   window.addEventListener('scroll', function () {
@@ -56,33 +51,6 @@
       if (window.innerWidth > 1024) setMenu(false);
     });
   }
-
-  /* ------------------------------------------------------------------
-     Scroll reveal
-     ------------------------------------------------------------------ */
-  var revealables = $$('[data-reveal]');
-  if (!('IntersectionObserver' in window) || reduced) {
-    revealables.forEach(function (el) { el.classList.add('is-in'); });
-  } else {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
-        var el = entry.target;
-        var delay = parseFloat(el.getAttribute('data-delay') || '0');
-        setTimeout(function () { el.classList.add('is-in'); }, delay * 1000);
-        io.unobserve(el);
-      });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
-    revealables.forEach(function (el) { io.observe(el); });
-  }
-
-  /* Auto-stagger children inside [data-stagger] */
-  $$('[data-stagger]').forEach(function (group) {
-    var step = parseFloat(group.getAttribute('data-stagger')) || 0.08;
-    $$('[data-reveal]', group).forEach(function (el, i) {
-      if (!el.hasAttribute('data-delay')) el.setAttribute('data-delay', (i * step).toFixed(2));
-    });
-  });
 
   /* ------------------------------------------------------------------
      Animated counters

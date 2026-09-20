@@ -32,12 +32,18 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for collaborator setup and the change wor
 ## Local preview
 
 ```bash
-python3 ~/ABX-Intelligence/serve.py
+node ~/ABX-Intelligence/serve.js
 ```
 
 Then open http://localhost:4321
 
-`serve.py` mirrors Cloudflare's routing, so `/solutions` serves
+`serve.py` does the same thing and still works on machines where `python3`
+runs. On this Mac it does not: Apple ships python3 and git as stubs that
+refuse to run until the Xcode licence is accepted, with
+`sudo xcodebuild -license accept`.
+
+
+`serve.js` mirrors Cloudflare's routing, so `/solutions` serves
 `public/solutions.html` and unknown paths serve `public/404.html`. Plain
 `python3 -m http.server` will not resolve the extensionless links.
 
