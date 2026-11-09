@@ -22,6 +22,13 @@
     onScroll();
   }
 
+  /* Hero footage: show the still frame instead to anyone who asks for less motion. */
+  var heroVideo = $('.hero-media video');
+  if (heroVideo && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    heroVideo.removeAttribute('autoplay');
+    heroVideo.pause();
+  }
+
   /* Phone menu */
   var toggle = $('.nav-toggle');
   var menu = $('.nav-mobile');
