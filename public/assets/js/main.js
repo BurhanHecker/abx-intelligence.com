@@ -23,12 +23,12 @@
   }
 
   /* Motion only while it is on screen. Event videos (data-inview) load and
-     play when scrolled into view and pause when they leave; the paper-to-app
-     drawing pauses off screen. Anyone who asks for less motion gets the
-     still frame and the finished drawing. */
+     play when scrolled into view and pause when they leave; the drawings
+     stop drifting off screen. Anyone who asks for less motion gets the
+     still frame and still drawings. */
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var videos = $$('video[data-inview]');
-  var drawings = $$('.p2a');
+  var drawings = $$('svg.iso');
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
