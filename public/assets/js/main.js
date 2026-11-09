@@ -22,11 +22,31 @@
     onScroll();
   }
 
-  /* Hero footage: show the still frame instead to anyone who asks for less motion. */
-  var heroVideo = $('.hero-media video');
-  if (heroVideo && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    heroVideo.removeAttribute('autoplay');
-    heroVideo.pause();
+  /* Motion only while it is on screen. Event videos (data-inview) load and
+     play when scrolled into view and pause when they leave; the paper-to-app
+     drawing pauses off screen. Anyone who asks for less motion gets the
+     still frame and the finished drawing. */
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var videos = $$('video[data-inview]');
+  var drawings = $$('.p2a');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        var el = en.target;
+        if (el.tagName === 'VIDEO') {
+          if (en.isIntersecting && !reduced) {
+            var p = el.play();
+            if (p && p.catch) p.catch(function () {});
+          } else {
+            el.pause();
+          }
+        } else {
+          el.classList.toggle('is-paused', !en.isIntersecting);
+        }
+      });
+    }, { threshold: 0.25 });
+    videos.forEach(function (v) { io.observe(v); });
+    drawings.forEach(function (d) { io.observe(d); });
   }
 
   /* Phone menu */
