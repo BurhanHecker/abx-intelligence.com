@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Assembly | ABX Intelligence</title>
 <meta name="description" content="Design your own website by recognising it rather than describing it. Scroll through layouts, colour, type and components one at a time, and send us the brief.">
 <meta name="theme-color" content="#121314">
@@ -18,41 +18,51 @@
 <link rel="icon" href="/assets/img/favicon-512.png?v=202609121500" type="image/png" sizes="512x512">
 <link rel="apple-touch-icon" href="/assets/img/favicon-180.png?v=202609121500">
 <link rel="preload" href="/assets/fonts/instrument-sans-600.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/css/fonts.css?v=202609141530">
-<link rel="stylesheet" href="/assets/css/style.css?v=202609141530">
+<link rel="stylesheet" href="/assets/css/fonts.css?v=202611091830">
+<link rel="stylesheet" href="/assets/css/style.css?v=202611091830">
 <link rel="stylesheet" href="/assets/css/assembly.css?v=202609141530">
 </head>
 <body class="assembly-page">
 <a class="skip" href="#main">Skip to content</a>
-<div class="grain" aria-hidden="true"></div>
-<div class="scroll-bar" aria-hidden="true"></div>
 
 <header class="nav">
   <div class="container nav-inner">
-    <a class="logo" href="/">
+    <a class="logo" href="/" aria-label="ABX Intelligence home">
       <picture>
         <source media="(max-width:640px)" type="image/webp" srcset="/assets/img/logo-mark.webp 1x, /assets/img/logo-mark@2x.webp 2x">
         <source media="(max-width:640px)" type="image/png" srcset="/assets/img/logo-mark.png 1x, /assets/img/logo-mark@2x.png 2x">
         <source type="image/webp" srcset="/assets/img/logo-lockup.webp 1x, /assets/img/logo-lockup@2x.webp 2x">
-        <img src="/assets/img/logo-lockup.png" srcset="/assets/img/logo-lockup.png 1x, /assets/img/logo-lockup@2x.png 2x" alt="ABX Intelligence. Understand. Adapt. Excel." decoding="async">
+        <img src="/assets/img/logo-lockup.png" srcset="/assets/img/logo-lockup.png 1x, /assets/img/logo-lockup@2x.png 2x" alt="ABX Intelligence" decoding="async">
       </picture>
     </a>
     <nav class="nav-links" aria-label="Primary">
-      <a href="/assembly" class="is-active">Assembly</a>
       <a href="/solutions">Solutions</a>
       <a href="/services">Services</a>
+      <a href="/approach">Approach</a>
       <a href="/about">About</a>
-      <a href="/approach">Our Approach</a>
-      <a href="/contact">Contact</a>
+      <a href="/assembly" aria-current="page">Assembly</a>
     </nav>
     <div class="nav-cta">
-      <a class="btn btn--primary btn--sm" href="/contact">Request a Consultation</a>
-      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+      <a class="btn btn--primary btn--sm" href="/contact">Contact us</a>
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
         <span></span><span></span>
       </button>
     </div>
   </div>
 </header>
+<nav class="nav-mobile" id="mobile-menu" aria-label="Menu">
+  <a href="/solutions">Solutions</a>
+  <a href="/services">Services</a>
+  <a href="/approach">Approach</a>
+  <a href="/about">About</a>
+  <a href="/assembly" aria-current="page">Assembly</a>
+  <a href="/contact">Contact</a>
+  <a class="btn btn--primary" href="/contact">Start a project</a>
+  <div class="nav-mobile-foot">
+    <a href="mailto:sales@abx-intelligence.com">sales@abx-intelligence.com</a>
+    <a href="https://www.instagram.com/abx.intelligence/" rel="noopener">Instagram @abx.intelligence</a>
+  </div>
+</nav>
 
 <main id="main">
 <!-- ---------------------------------------------------------------- hero -->
@@ -66,7 +76,7 @@
     <p class="kicker"><i></i>The all-new</p>
     <h1 class="wordmark">Assembly</h1>
     <p class="lede">
-      Build your own website the way you find music — scroll, and stop when
+      Build your own website the way you find music: scroll, and stop when
       something is right. No brief to write. No vocabulary to learn.
     </p>
     <a class="cta" href="#stage">Start building<em>&#8595;</em></a>
@@ -77,7 +87,7 @@
 
 <!-- --------------------------------------------------------------- facts -->
 <section class="facts">
-  <div class="fact"><b id="f-combos">—</b><span>possible sites, counted — not a slogan</span></div>
+  <div class="fact"><b id="f-combos">—</b><span>possible sites, counted, not a slogan</span></div>
   <div class="fact"><b>2,764,800</b><span>colour schemes, every one contrast-checked</span></div>
   <div class="fact"><b>3,645,000</b><span>navigation bars, before you choose a colour</span></div>
   <div class="fact"><b>12 / 28</b><span>layouts, and the sections they carry</span></div>
@@ -88,7 +98,7 @@
   <p>
     Most people cannot describe the website they want, and every agency asks
     them to anyway. Assembly asks you to recognise it instead. One option at a
-    time, full size, doing the thing it will actually do — hover it, watch it
+    time, full size, doing the thing it will actually do. Hover it, watch it
     move. Say <em>more like this</em> and the next ones follow your eye.
   </p>
 </section>
@@ -144,7 +154,7 @@
         <div class="hintbar" id="hintbar">
           <kbd>&#8593;</kbd><kbd>&#8595;</kbd> move · <kbd>Enter</kbd> select
         </div>
-        <button class="done-btn" id="done-btn" type="button" hidden>Done — review my brief</button>
+        <button class="done-btn" id="done-btn" type="button" hidden>Done, review my brief</button>
       </div>
 
       <!-- side controls -->
@@ -178,51 +188,49 @@
   <div class="container">
     <div class="footer-top">
       <div class="footer-brand">
-        <a class="logo logo--foot" href="/">
+        <a class="logo logo--foot" href="/" aria-label="ABX Intelligence home">
           <picture>
             <source type="image/webp" srcset="/assets/img/logo-lockup.webp 1x, /assets/img/logo-lockup@2x.webp 2x">
             <img src="/assets/img/logo-lockup.png" srcset="/assets/img/logo-lockup.png 1x, /assets/img/logo-lockup@2x.png 2x" alt="ABX Intelligence" loading="lazy" decoding="async">
           </picture>
         </a>
-        <p>Intelligent Systems. Built for People.</p>
+        <p>Custom software for schools, built in Muscat, Oman.</p>
+      </div>
+      <div>
+        <h2 class="foot-h">Work</h2>
+        <ul>
+          <li><a href="/solutions">Solutions</a></li>
+          <li><a href="/services">Services</a></li>
+          <li><a href="/assembly">Assembly</a></li>
+        </ul>
       </div>
       <div>
         <h2 class="foot-h">Company</h2>
         <ul>
           <li><a href="/about">About</a></li>
-          <li><a href="/approach">Our Approach</a></li>
+          <li><a href="/approach">Approach</a></li>
           <li><a href="/contact">Contact</a></li>
-        </ul>
-      </div>
-      <div>
-        <h2 class="foot-h">What we do</h2>
-        <ul>
-          <li><a href="/assembly">Assembly</a></li>
-          <li><a href="/solutions">Solutions</a></li>
-          <li><a href="/services">Services</a></li>
-          <li><a href="/solutions#platform">Our Platform</a></li>
+          <li><a href="https://www.instagram.com/abx.intelligence/" rel="noopener">Instagram</a></li>
         </ul>
       </div>
       <div>
         <h2 class="foot-h">Legal</h2>
         <ul>
-          <li><a href="/privacy">Privacy Policy</a></li>
-          <li><a href="/terms">Terms &amp; Conditions</a></li>
-          <li><a href="/cookies">Cookie Policy</a></li>
-          <li><a href="/refunds">Payment &amp; Refunds</a></li>
+          <li><a href="/privacy">Privacy</a></li>
+          <li><a href="/terms">Terms</a></li>
+          <li><a href="/cookies">Cookies</a></li>
+          <li><a href="/refunds">Payments and refunds</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bot">
       <span>&copy; <span data-year>2026</span> ABX Intelligence. All rights reserved.</span>
-      <span>Intelligent Systems. Built for People.</span>
+      <a href="mailto:sales@abx-intelligence.com">sales@abx-intelligence.com</a>
     </div>
   </div>
 </footer>
 
-
-<script src="/assets/js/main.js?v=202609101355" defer></script>
-</body>
+<script src="/assets/js/main.js?v=202611091830" defer></script>
 <script type="module" src="/assets/js/assembly/app.js?v=202609141530"></script>
 </body>
 </html>
